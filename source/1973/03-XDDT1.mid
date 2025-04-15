@@ -1,6 +1,6 @@
 / Page numbers will be written as comments
 / They will be erased when finished!
-/ Page 1 out of 26
+/ Page 1 out of 25
 
 asc=720051
 cac=720053
@@ -56,7 +56,7 @@ ddm=(ddtcor)
 eic=(ddtcor+sgp)
 evc=(ddtcor+est)
 
-/page 2 out of 26
+/page 2 out of 25
 /lio (7000... didn't have a closing bracket in the listing
 
 c20=(20)
@@ -110,7 +110,7 @@ sysup,		lac i nethnd
 		sza
 		netm1u								/net back up if a net user exists
 		jmp t+1
-/page 3 of 26
+/page 3 of 25
 
 lowlim=40
 ddtcor+4200/
@@ -895,3 +895,277 @@ cun,		ior t2			/used as ior
 		jmp ln1
 
 /page 21
+
+/ Rest of number-sign lookup
+
+shall,		lac syl
+		spa
+		jmp err
+		sal 2s
+		sub (100"t"4)
+		sma
+		jmp err
+		add (100"t"4+141000
+		jmp dds
+
+chh1,		sad sym r
+		jmp find
+		idx ye
+		idx ye
+		idx ye
+
+find,		idx ye
+		jmp .+1
+		jmp .
+
+status,		lac stat
+		add user
+		jmp dds
+c,		law mem
+		jmp f+1
+
+m,		law msk
+		jmp f+1
+
+f,		law est
+f+1,		ior ddm
+dds,		dac sp1
+n1,		dzm chi
+		dac syl
+		dac dnm
+		jmp n2
+
+/Mode changing routines
+
+lot,		law tysa
+		jmp cns+1
+
+smb,		law pi
+		jmp cns+1
+
+cns,		law opt				/Symbolic-constant-Flexo switch setup
+cns+1,		dap pns
+		jmp lse
+
+oad,		law pvl
+		jmp rad+1
+
+rad,		law pev				/Octal-relative switch setup
+rad+1,		dap pa1
+tls,		jmp lse				/Used as lse
+
+/ page 22
+
+/Rest of bs
+
+bs2,		idx sp2
+sp3,		dac lwt
+		dip mem
+		jda pad
+		law charac r/
+		jda tys
+		lac tas
+		dip mem
+		jmp sp5
+
+/Rest of fs
+
+fs1,		add sp2
+		dap sp2
+		jmp sp3
+
+/Rest of kil
+
+ki3,		lac (ddtcor low
+		dac est
+		jmp lse
+
+/Rest of tbl
+
+tbl1,		jsp gwd
+		dac df1
+		lac sym l
+		lio sym l
+		ril 1s
+		sma"u"spi
+		jmp mr1
+		and (177777
+		dac sym l
+		jsp de
+		jmp mr1
+
+/Rest of effective address search
+
+ea1,		dac eas1			/Save instruction
+		lia
+		and (770000
+		sad (cal
+		jmp ea4
+		sad (jda
+		jmp ea6
+		sad (law i
+		jmp ws3
+		and (760000
+		sas (opr			/Flush these
+		sad (spo
+		jmp ws3
+
+/ page 23
+
+		sas (skp
+		sad (sft
+		jmp ws3
+		sad (iot
+		jmp ws3
+		sas (dch
+		sad (lch
+		jmp ea2
+		lai
+ea3.,		and ci				/Is there an i bit
+sk1.,		sza
+		jmp ea2				/yes
+		lac eas1
+		and (760000
+		sad (xct)
+		jmp ea11
+		sas (lch
+		sad (dch
+		jmp ea5
+ws8,		law 7777			/No, and off instruction part of first word
+		and i t2
+
+ws1,		xor wrd				/Compare
+can,		and msk				/Used as and
+wea,		xx				/sza or sza i
+		jmp ws3				/Setup next word
+
+ws6,		lac mwsu
+		sad mem
+		sas mwsfti
+		jmp notmw1
+		jsp lcc
+		lac user
+		dac mwsxu
+		jda opt
+		lac (flexo "l"
+		jda tys
+		jsp lcc
+notmw1,		law lcc
+
+pac,		dap pax				/Hit, print out
+		lac t
+		dap loc
+		jda pad
+		law charac r/
+		jda tys
+		jsp lct
+		lac i t
+		jda lwt
+pax,		jsp .
+
+/ page 24
+
+ws3,		idx t				/Index
+		sub mem
+		sub ul
+		spq
+		jmp wsnw
+ws3+5,		lac mwsu
+		sas mem
+		jmp lse
+		jmp mwsnu
+
+wsnw,		lac t
+		jmp ws4
+
+ea4,		lac wrd				/Cal finds 100,101 and its address
+		sas (100
+		sad (101
+		jmp ws6
+		jmp ws8				/Check address
+
+ea6,		jsp eas1+1			/jda,check thing addressed
+		idx eas1			/check address+1
+ea7,		and (7777
+		jmp ws1
+
+ea2,		law ea3.			/Get reg, referenced for i,lch,dch
+		jmp ea12
+
+ea11,		law ea1
+ea12,		dap ea13
+		lai
+		jda eas1
+		idx sym
+		sad (10.
+		jmp ws3
+		lai
+		dap i t2
+		lac i t2
+		lia
+ea13,		jmp .
+
+ea5,		lai				/lch,dch ptr
+		lio eas1			/instr.
+		ril 5s
+		spi
+		idc
+		jda eas1			/Check loc. referenced by pointer
+		lac t2
+		jmp ea7				/Check loc of pointer
+
+eas1,		0				/Special compare
+eas1+1,		dap eas2
+		law 7777
+		and eas1
+		xor wrd
+		and msk
+		sza
+eas2,		jmp .				/Miss, return
+		jmp ws6				/Hit, print, and quit
+
+
+/ page 25
+
+/Rest of "look"; create new user.
+
+create,		lio (500
+		lac (140000
+		lsm
+		io i wtop
+		dac t
+		sub where
+		dac opt
+		sub (100)
+		sma
+		jmp er5
+		idx i wtop
+		dio i t
+		esm
+		lac opt
+		bring1
+		law 11
+		dac t
+		lio num
+strtu1,		dio i t
+		idx t
+		sas ci
+		jmp strtu1
+		lac (tyihng
+strtup,		bring1
+		dac i (suppc
+		cla
+		dip i c4			/Clear "bits" in case halting
+		lio (suppc
+		jmp bgn2
+
+/Rest of "hold"; halt current user
+
+halt1,		sas (1
+		jmp err
+		jsp notu0
+		lac (halt
+		jmp startup
+
+start
+		
