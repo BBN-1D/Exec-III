@@ -1,0 +1,1171 @@
+/ Page numbers will be written as comments
+/ They will be erased when finished!
+/ Page 1 out of 25
+
+asc=720051
+cac=720053
+cbs=720056
+cks=720033
+dsc=720050
+eem=724074
+esm=720055
+ioh=730000			/in-out halt
+isb=720052
+lat=752260
+lem=720074
+lsm=720054
+ppa=720005
+ppb=720006
+rpa=720001
+rpb=720030
+sft=660000
+szs=640000
+tyi=720004
+tyo=720003
+
+dba=722061
+dcl=720063
+dia=720061
+dra=722062
+dwc=720062
+erm=720065
+lrm=720064
+rcc=723022
+rch=722022
+rxk=720032
+rnm=720066
+rrc=722122
+rri=720037
+rro=720017
+rsc=721122
+rsm=720067
+rtb=720035
+ssb=724122
+tcb=724022
+tcc=725022
+
+halt=760400
+tything=iot 100
+netm1u=iot 643
+net1md=iot 143
+suppc=40	/place to plant instruction
+pc=35
+ddtcor=10000
+l=0		r=1
+ddm=(ddtcor)
+eic=(ddtcor+sgp)
+evc=(ddtcor+est)
+
+/page 2 out of 25
+/lio (7000... didn't have a closing bracket in the listing
+
+c20=(20)
+c77=(77)
+ci=(i)
+cj=(jump)
+c4=(4000000)
+
+define		disp lc,uc
+		z=lc-lse 44
+		x"t"1000 uc-lse 44
+terminate	disp
+
+define		letter a,b
+		disp a+lse-44,be
+terminate	letter
+
+define		sqoze a,b,c
+		a"t"1600.b"t"40.+c
+terminate	sqoze
+
+ddtcor/		jmp rlse
+		jmp userr
+stat,		0
+dwant,		0
+ddto,		0
+ddtrpa,		0
+ddtclr,		0
+ddtrrd,		ddctcor lse
+iopdne,		0								/core 17 link into core 10
+12,		0								/unused
+ddtcont,	0
+14,		0								/unused
+wtop,		0
+where,		0
+nethnd,		0
+20,		cla								/halt procedure
+		lsm
+		sas i dcont
+		jmp er5								/iop busy
+		jsp i iopdne
+		netm1d
+26,		hlt								/may push continue
+27,		jmp sysup							/entry from restart procedure
+
+30,		lio (70000							/unhang the data channel
+		rro 500
+		 hlt
+		jmp t+1
+sysup,		lac i nethnd
+		sza
+		netm1u								/net back up if a net user exists
+		jmp t+1
+/page 3 of 25
+
+lowlim=40
+ddtcor+4200/
+
+low,			0				-0			/initial symbol table
+			0				ddtcore
+			sqoze	0,	27,	46		msk
+			sqoze	0,	26,	46		est
+			sqoze	0,	15,	46		mem
+			0						400000
+			
+/Operate group (in event time order)
+
+			sqoze	15,	15,	23		cci
+			sqoze	26,	13,	32		lap
+			sqoze	26, 13, 36		lat
+			sqoze	15,	26,	15		clc
+			sqoze	15,	25,	13		cla
+			sqoze	15,	26,	23		cli
+			sqoze	26,	13,	23		opr 100		/la=cla opr
+			sqoze	26,	13,	36		opr 2000	/lat=cla opr
+			sqoze	15,	27,	13		cma
+			sqoze	15,	27,	13		cmi
+			sqoze	22,	26,	23		hlt
+			sqoze	35,	41,	32		swp
+			sqoze	26,	13,	23		lai
+			sqoze	26,	23,	13		lia
+			sqoze	35,	36,	20		stf
+nopcod,		sqoze	30,	31,	32		nop
+			sqoze	31,	32,	34		opr
+			
+/Special operate group (in event time order)
+
+			sqoze	26,	20,	23		lfi
+			sqoze	26,	23,	20		lif
+			sqoze	35,	44,	26		szl
+			sqoze	35,	15,	23		sci
+			sqoze	35,	15,	20		scf
+			sqoze	15,	26,	26		cll
+			sqoze	23,	20,	23		ifi
+			sqoze	23,	23,	29		iif
+			sqoze	35,	15,	27		scm
+			sqoze	15,	27,	26		cml
+			sqoze	23,	16,	13		ida
+			sqoze	23,	16,	15		idc
+			sqoze	13,	13,	23		aai
+			sqoze	23,	13,	23		iai
+			sqoze	42,	13,	23		xai
+			sqoze	35,	32,	31		spo
+/ page 4
+
+/Skip group
+
+			sqoze	15,	26,	31		clo
+			sqoze	35,	32,	33		spq
+			sqoze	35,	44,	27		szm
+			sqoze	35,	30,	23		sni
+			sqoze	35,	44,	31		spi
+			sqoze	35,	44,	31		szo
+			sqoze	35,	27,	13		sma
+			sqoze	35,	32,	13		spa
+			sqoze	35,	44,	13		sza
+			sqoze	35,	44,	20		szf
+			sqoze	35,	44,	35		szs
+			sqoze	35,	25,	32		skp
+
+/standard instructions
+
+			sqoze	0,	0,	23		i
+			sqoze	13,	16,	16		add
+			sqoze	13,	30,	16		and
+			sqoze	13,	35,	15		asc
+			sqoze	15,	13,	15		cac
+			sqoze	15,	13,	26		cal
+			sqoze	15,	14,	35		cbs
+			sqoze	15,	25,	35		cks
+			sqoze	16,	13,	15		dac
+			sqoze	16,	13,	32		dap
+			sqoze	16,	14,	13		dba
+			sqoze	16,	15,	22		dch
+			sqoze	16,	15,	26		dcl
+			sqoze	16,	23,	13		dia
+			sqoze	16,	23,	31		dio
+			sqoze	16,	23,	32		dip
+			sqoze	16,	23,	40		div
+			sqoze	16,	34,	13		dra
+			sqoze	16,	34,	15		dsc
+			sqoze	16,	41,	15		dwc
+			sqoze	16,	44,	27		dzm
+			sqoze	17,	17,	27		eem
+			sqoze	17,	34,	27		esm
+			sqoze	23,	16,	46		idx
+			sqoze	23,	31,	22		ioh
+			sqoze	23,	31,	34		ior
+			sqoze	23,	31,	36		iot
+			sqoze	23,	35,	14		isb
+			sqoze	23,	35,	32		isp
+			sqoze	24,	16,	13		jda
+			sqoze	24,	27,	32		jmp
+			sqoze	24,	35,	32		jsp
+			sqoze	26,	13,	15		lac
+			sqoze	26,	13,	41		law
+			sqoze	26,	15,	22		lch
+			sqoze	26,	23,	31		lio
+			sqoze	26,	34,	27		lrm
+			
+/ page 5
+
+			sqoze	26,	35,	27		lsm
+			sqoze	27,	37,	26		mul
+			sqoze	32,	32,	13		ppa
+			sqoze	32,	32,	14		ppb
+			sqoze	34,	13,	26		ral
+			sqoze	34,	13,	34		rar
+			sqoze	34,	15,	15		rcc
+			sqoze	34,	15,	22		rch
+			sqoze	34,	15,	22		rch
+			sqoze	34,	15,	25		rck
+			sqoze	34,	15,	26		rcl
+			sqoze	34,	23,	26		ril
+			sqoze	34,	23,	34		rir
+			sqoze	34,	30,	27		rnm
+			sqoze	34,	32,	13		rpa
+			sqoze	34,	34,	14		rpb
+			sqoze	34,	34,	14		rrb
+			sqoze	34,	34,	15		rrc
+			sqoze	34,	34,	23		rri
+			sqoze	34,	34,	31		rro
+			sqoze	34,	35,	15		rsc
+			sqoze	34,	35,	27		rsm
+			sqoze	34,	36,	14		rtb
+			sqoze	35,	13,	16		sad
+			sqoze	35,	13,	26		sal
+			sqoze	35,	13,	34		sar
+			sqoze	35,	13,	35		sas
+			sqoze	35,	15,	26		scl
+			sqoze	35,	15,	34		scr
+			sqoze	35,	20,	36		sft
+			sqoze	35,	23,	26		sil
+			sqoze	35,	23,	34		sir
+			sqoze	35,	35,	14		ssb
+			sqoze	35,	37,	14		sub
+			sqoze	36,	13,	16		tad
+			sqoze	36,	15,	14		tcb
+			sqoze	35,	15,	15		tcc
+			sqoze	36,	43,	23		tyi
+			sqoze	36,	43,	31		tyo
+			sqoze	42,	15,	36		xct
+			sqoze	42,	31,	34		xor
+sgp,		sqoze	0,	42,	42		xx
+			sqoze	0,	 2,	35		1s
+			sqoze	0,	 3,	35		2s
+			sqoze	0,	 4,	35		3s
+			sqoze	0,	 5,	35		4s
+			sqoze	0,	 6,	35		5s
+			sqoze	0,	 7,	35		6s
+			sqoze	0,	10,	35		7s
+			sqoze	0,	11,	35		8s
+			sqoze	0,	12,	35		9s
+
+est,		ddtcore low
+
+/ page 6
+
+rlse,		jsp i ddtrrd
+lse,		jsp lcc					/listen loop
+lse+1,		clc"u"clf	7
+		dac sp2
+		dac opn
+lss,		clc
+		dac chi
+		dac sp1
+lsp,		dzm wrd
+ssn-1,		lac cun					/(ior)
+bslash,		dzm dnm
+		szm syl
+n2,		dzm sym l				/loop for next syllable
+		dzm sym r
+		dzm fsm
+		clc"u"clf 4
+		dac let
+		dac cc
+lsr,		lio sk1					/loop per char,  cheap place...
+		dio wa					/...to do initialization.
+		law vf5+1
+		dap vf5
+		law lwt
+		dap bax
+		jsp i ddti				/ type-in, hang if no chars
+		ral 6s
+		dac ch
+cdb,		law dtb					/used as dtb
+		dac fl1					/non-zero
+cad,		add ch					/used as add
+		dap .+1
+lsl,		lio .
+		isp cas
+		jmp upper
+lsu,		szf t 4					/"quote" mode?
+		jmp notqm				/no
+		idx cc
+		sas (4
+		jmp ln4
+quote2,		lac fsm
+		jmp n1
+
+/ page 7
+
+/No-eval routines
+
+ulc,		law i 2					/77 seen
+		dac cas
+		jmp lsr
+eot,		clc					/eot seen, reset everything for larry
+		dac msk
+		dap ulc
+		dzm ll
+		lac (dch
+		dac mem
+		dac tas
+		law 8.
+		dac radix
+		dzm user
+		dzm num
+		law pi
+		dap pns
+		law pev
+		dap pa1
+		jmp lse+1
+			
+chh,		lio let					/number-sign lookup
+		lac chi
+		spi"u"sma
+		jmp shall
+		law chtbl
+seek,		dap .+1
+/and
+ye,		lac .
+/shall		sza
+/find		jmp chh1
+err,		law charac r?				/print q-mark.  ignore last char.
+		jda tys
+		jmp lsr
+			
+xcl,		law xctbl				/exclamation mark
+		jmp seek
+			
+dot,		lio cc					/period
+		lac loc
+		spi i
+		lac dnm
+		dac syl
+		dac dnm
+		law 44
+		dac t2
+		jmp ln1
+			
+quo,		lac fsm					/" means take as internal
+		sza
+		jmp n1
+		stf 4
+		jmp lsr
+
+/ page 8
+
+q,		lac lwt
+		jmp n1
+
+daq,		law 7777				/<defines sym as adddress of q
+		and lwt
+		jmp com+1
+
+com,		lac loc					/comma defines sym as loc
+com+1,		dac df1
+		dzm fl1
+def,		lac let					/define symbol
+sk1,		sza
+		jmp err
+		jsp de
+		jmp pn2
+
+del,		law 3					/#,delete
+		jda tys
+del1,		jmp pn2					/ end of no eval routines
+
+/Set output radix
+
+radx,		sni"u"szm				/set radix
+		sad (1
+		jmp err
+		dac radix
+		jmp lse
+
+/Arithmetic functions
+
+pls,		lac cad					/plus sign
+		jmp ssn
+
+min,		spi					/minus sign
+		dio wed
+		lac csu					/(sub)
+		jmp ssn
+
+isc,		lac can					/(and) logical "and".
+		jmp ssn
+
+uni,		jmp ssn-1				/logical "or"
+
+/page 9 
+
+/Print "q" in form specified
+
+eql,		dac lwt					/print integer in current radix
+		jsp lct
+		jda opt
+pn2,		jsp lct
+		jmp lss
+
+dec,		dac lwt					/print as decimal integer
+		lac radix
+		dac t
+		law 10.
+		dac radix
+		jsp lct
+		jda opt
+		lac t
+		dac radix
+		jmp pn2
+
+abw,		dac lwt					/print as instruction
+		jsp lct
+		dac pi					/jda pi, but don't set flag 2
+		law pn2
+		stf 3					/force symbolic printout
+		jmp pi+2
+
+psb,		dac lwt					/print as internal
+		jsp lct
+		jda tysa
+		jmp pn2
+
+sqp,		dac lwt					/print as sqoze code
+		jsp lct
+		dac sym r
+		dzm sym l
+		law pn2
+		dap spx
+		jmp sptlim
+
+/set current core
+
+core,		sni i
+		jmp err
+		rar 6s
+		and (170000
+		dip mem
+		dip tas					/yes,virginia, it's necessary
+		jmp lse
+
+/page 10
+
+/Register examination and change
+
+vbr,		and (177777				/ :
+		dip tas
+		spi
+		jmp vbr1
+		dip mem
+		jmp ta5
+
+vbr1,		and (170000
+		sza
+		bring1					/ call bring without changing mem
+		jmp vbr1x
+
+bac,		law opt					/ open bracket 	(bar=constant)
+		jmp bas+1
+
+bai,		law tysa				/control "i"	(bar=internal)
+		jmp bas+1
+
+bas,		law pi					/closed bracket	(bar-symbolic)
+bas+1,		dap bax
+vbr1x,		lac opt
+bar,		spi
+		jmp ta6
+		lio sp1
+		dio sp2
+		spi
+		jmp ta5
+		and (1777777)
+tr3,		dac sp2
+sp5,		jsp lct
+		lac i sp2
+		jmp ta7
+
+cr,		dac lwt					/line feed
+		jda mrf
+		law 7715
+		jda tys
+		jmp lse+1
+
+uc8,		jda mrf		.			/> means make corr, and open register
+		jmp ta6
+
+/page 11
+					
+bs,		backspace				/backspace
+		lio sp2
+		spi i
+		jmp bs2
+		idx loc
+bs+5,		dac lwt
+		jmp ta3+2
+
+fs,		jda mrf					/arrow up (forward space)
+		jsp lcc
+		law i 1
+		lio sp2
+		spi i
+		jmp fs1
+		add loc
+		jmp bs+5
+
+tab,		jda mrf					/memory field switch
+ta3,		dac lwt
+		jsp lcc
+ta3+2,		jda pad
+		law charac r/
+		jda tys
+ta5,		dzm loc
+		dap loc
+		lio mem
+		dio tas
+ta6,		lio c4
+		dio sp2
+		dap tas
+		jsp lct
+		bring
+		lac i tas
+		lac i tas
+ta7,		dac lwt
+bax,		jda .					/pi, opt or lwt
+		dzm opn
+		jmp pn2
+
+/page 12
+
+/Symbol routines
+
+val,		dac df1					/open paren, sets up value for definition
+		jmp lss
+
+tbl,		jsp i ddtclr				/read symbol punch
+		jmp rdny
+		dzm fl1
+		jsp soi
+mr1,		jsp gwd
+		and (177777
+		dac sym r
+		ior sym l
+		sza
+		jmp tbl1
+tbn,		jsp lct
+		lac est
+		jda opt
+tbm,		jsp rbk					/skips rest of tape
+		jmp tbm
+
+kil,		spi					/kil symbol(s)
+		jmp ki3
+ki2,		lio let
+		spi
+		jmp err
+ki1,		lac i ev2				/used as lac i
+		io ki1
+		dip i ev2
+		jmp lse
+
+/page 13
+
+
+/Zero core
+
+pul,		spi					/lower limit setup
+		jmp err
+		dac fa
+		jmp lss
+
+zro,		jsp ok					/zero core to contents of m#+3
+		law 7777
+		spi
+		dac wrd
+		dip wrd
+		and fa
+		spt
+		cla
+		ior mem
+		dac t
+		lio num
+		bring
+zr2,		sub mem
+		szm jmp lse
+		dio i t
+		idx t
+		jmp zr2
+
+/page 14
+
+/Searches
+
+eas,		law ea1				/effective address search
+		jmp ws
+
+nws,		lac sk2				/not word search
+		dac wea
+wds,		law ws1				/word search
+ws,		spi
+		jmp err
+		dap ws2
+		jsp lcc
+		lac user
+		dac mwsu
+mwsnu,		dzm mwsfti
+		sza i
+		sas mem
+		jmp notmws
+		lio mwsxu			/moby word search:  if user=mem=0, search...
+		idx user			/...all users for wrd.
+		sad (100
+		jmp look1			/restore user; exit to lse.
+		add stat
+		dac eas1
+		law i 7777
+		and i eas1
+		sad (760000
+		jmp ws3+5
+notmws,		bring
+		lac ll
+		ior mem
+		dac t
+		dip t2
+ws4,		dzm sym
+		dap t2
+		lac i t2
+ws2,		jmp .				/ea1 or ws1
+
+/page 15
+
+/Routines concerned with time sharing
+
+look,		spi				/set user being examined
+		jmp create			/go create new user
+		lia
+		sub (100)
+		sma
+		jmp err
+		lac stat
+		aai
+		dac t
+		law i 7777
+		and i t
+		sad (760000
+		jmp userr
+look1,		dio user
+		jmp lse
+
+hold,		spi i
+		jmp halt1			/halt user
+		law (ior (lac))			/prevent user from halting
+		jmp hold1
+
+free,		law (and (-lac))		/allow user to halt
+hold1,		dap hold2			/set or clear held by xddt bit
+		jsp notu0
+		spi i
+		jmp err				/works for current user only
+		bring1
+		lac i c4			/(400000)
+hold2,		xct .
+		dac i c4
+		jmp lse
+
+/ page 16
+
+setptr,		spi i				/free tt ptrs
+		spa
+		jmp err
+		sal 2s
+		add (141000
+		dac t
+		sub (141000+40"t"4)		/40 tt's
+		sma
+		jmp err
+		law 101
+		lsm
+		dac i t
+		idx t
+		lio i t				/had better be correct
+		idx t
+		lac i t
+		dzm i t
+		esm
+		jda opt
+		jmp lse
+
+/page 17
+
+bgn,		bring1				/start user
+		spi
+		jmp bgn3			/no arg
+		and (170000
+		sza i
+		jmp bgn1			/core 0
+		szs i 60
+		jmp er4
+bgn1,		jsp notu0
+		lio opt
+bgn2,		dio i (pc			/entry from "strtup"
+bgn3,		lac stat
+		add user
+		dac t
+		law 1
+		dap i t				/high queue
+		jmp lse
+
+xec,		sni i 60			/execute arg
+		jmp er4				/ss6 not up
+		dac .+1
+t,		0
+		nop
+		jmp lse				/read or verify paper tape
+
+svfy,		law vf2				/special verify
+		dap vf5
+vfy,		spi i				/verify core against binary tape
+		jmp err
+		jsp i ddtclr
+		jmp rdny
+		jsp lcc
+		lac rb2				/(sad i)
+		jmp rd1
+
+/page 18
+/ Use of repeat macro
+
+
+repeat (if vp -.lse+44-1000, print .mystic 1000 exceeded.
+
+rd,		spi i				/read binary tape into core
+		jmp err
+		jsp ok
+		jsp i ddtclr
+		jmp rdny
+		lac bs1				/(dac i)
+rd1,		dip vf4
+		jsp soi
+		bring
+vf1,		lac mem
+		dip t
+		lac t
+		sub ll
+		sub mem
+		spa
+		jmp vf2
+		add ll
+		sub ul
+		szm
+		jmp vf2
+		lac i la
+vf4,		t				/dac i or sad i
+		jmmp vf2
+		sas (xx)
+		sad num				/special verify ignores pgm modification
+		jmp vf5
+		law i 7777
+		and i t
+		add t
+		sub mem
+		sad i la			/ignore "." in adr if special vfy
+vf5,		jmp .				/jmp .+1 or jmp vf2
+		jsp pac
+		jsp lct
+		jsp lcc
+vf2,		idx t
+		idx la
+		sad rb1
+		jsp rbk
+		jmp vf1
+
+/ page 19
+
+/Branches.  Placed here to save room in dispatch area.
+
+/Rest of listen loop.
+
+notqm,		cla
+		rcl 9s
+		dac t2
+		sub (44
+		spa
+		jmp ln
+		add tls				/(jmp lse)
+		dap lsx
+		sub (jmp del1			/last no-eval routine
+		spq
+		jmp lsx
+		law syl
+		lio let
+		spi i				/skip if letter not seen
+		jsp evl
+		jmp ev4
+		law charact ru			/ignor input and start over
+er2,		jda tys
+		jmp lss
+
+ev4,		dap sgn
+		lac wrd
+sgn,		xx				/operator and syllable addr.
+		dac wrd
+		lio chi
+		spi
+		lac lwt
+		dac opt
+lsx,		jmp .				/i.o. minus if no arg.  arg in ac.
+
+upper,		jsp typout
+		xct lsl
+		ril 9s
+		jmp lsu
+
+ln,		add (44-12			/letter-number logic
+		spa
+		jmp n
+		dzm let
+ln1,		dzm chi
+		idx t2
+		idx cc
+		sas (4
+		jmp ln3
+		dio sym l
+		dzm sym r
+
+/page 20
+
+ln3,		sub (6
+		szm
+		jmp lsr
+		lac sym r
+		ral 2s
+		add sym r
+		ral 3s
+		add t2
+		dac sym r
+		law i 4
+		add cc
+		sma
+		jmp lsr
+ln4,		lac fsm			/entry from quote
+		ral 6s
+		add ch
+		dac fsm
+		law 77
+		sad ch
+		jmp ulc
+		law 3
+		szf 4
+		sas cc
+		jmp lsr
+		jmp quote2
+
+n,		lac syl
+		ral 3s
+cun,		ior t2			/used as ior
+		dac syl
+		lac dnm
+		ral 2s
+		add dnm
+		ral 1s
+		add t2
+		dac dnm
+		jmp ln1
+
+/page 21
+
+/ Rest of number-sign lookup
+
+shall,		lac syl
+		spa
+		jmp err
+		sal 2s
+		sub (100"t"4)
+		sma
+		jmp err
+		add (100"t"4+141000
+		jmp dds
+
+chh1,		sad sym r
+		jmp find
+		idx ye
+		idx ye
+		idx ye
+
+find,		idx ye
+		jmp .+1
+		jmp .
+
+status,		lac stat
+		add user
+		jmp dds
+c,		law mem
+		jmp f+1
+
+m,		law msk
+		jmp f+1
+
+f,		law est
+f+1,		ior ddm
+dds,		dac sp1
+n1,		dzm chi
+		dac syl
+		dac dnm
+		jmp n2
+
+/Mode changing routines
+
+lot,		law tysa
+		jmp cns+1
+
+smb,		law pi
+		jmp cns+1
+
+cns,		law opt				/Symbolic-constant-Flexo switch setup
+cns+1,		dap pns
+		jmp lse
+
+oad,		law pvl
+		jmp rad+1
+
+rad,		law pev				/Octal-relative switch setup
+rad+1,		dap pa1
+tls,		jmp lse				/Used as lse
+
+/ page 22
+
+/Rest of bs
+
+bs2,		idx sp2
+sp3,		dac lwt
+		dip mem
+		jda pad
+		law charac r/
+		jda tys
+		lac tas
+		dip mem
+		jmp sp5
+
+/Rest of fs
+
+fs1,		add sp2
+		dap sp2
+		jmp sp3
+
+/Rest of kil
+
+ki3,		lac (ddtcor low
+		dac est
+		jmp lse
+
+/Rest of tbl
+
+tbl1,		jsp gwd
+		dac df1
+		lac sym l
+		lio sym l
+		ril 1s
+		sma"u"spi
+		jmp mr1
+		and (177777
+		dac sym l
+		jsp de
+		jmp mr1
+
+/Rest of effective address search
+
+ea1,		dac eas1			/Save instruction
+		lia
+		and (770000
+		sad (cal
+		jmp ea4
+		sad (jda
+		jmp ea6
+		sad (law i
+		jmp ws3
+		and (760000
+		sas (opr			/Flush these
+		sad (spo
+		jmp ws3
+
+/ page 23
+
+		sas (skp
+		sad (sft
+		jmp ws3
+		sad (iot
+		jmp ws3
+		sas (dch
+		sad (lch
+		jmp ea2
+		lai
+ea3.,		and ci				/Is there an i bit
+sk1.,		sza
+		jmp ea2				/yes
+		lac eas1
+		and (760000
+		sad (xct)
+		jmp ea11
+		sas (lch
+		sad (dch
+		jmp ea5
+ws8,		law 7777			/No, and off instruction part of first word
+		and i t2
+
+ws1,		xor wrd				/Compare
+can,		and msk				/Used as and
+wea,		xx				/sza or sza i
+		jmp ws3				/Setup next word
+
+ws6,		lac mwsu
+		sad mem
+		sas mwsfti
+		jmp notmw1
+		jsp lcc
+		lac user
+		dac mwsxu
+		jda opt
+		lac (flexo "l"
+		jda tys
+		jsp lcc
+notmw1,		law lcc
+
+pac,		dap pax				/Hit, print out
+		lac t
+		dap loc
+		jda pad
+		law charac r/
+		jda tys
+		jsp lct
+		lac i t
+		jda lwt
+pax,		jsp .
+
+/ page 24
+
+ws3,		idx t				/Index
+		sub mem
+		sub ul
+		spq
+		jmp wsnw
+ws3+5,		lac mwsu
+		sas mem
+		jmp lse
+		jmp mwsnu
+
+wsnw,		lac t
+		jmp ws4
+
+ea4,		lac wrd				/Cal finds 100,101 and its address
+		sas (100
+		sad (101
+		jmp ws6
+		jmp ws8				/Check address
+
+ea6,		jsp eas1+1			/jda,check thing addressed
+		idx eas1			/check address+1
+ea7,		and (7777
+		jmp ws1
+
+ea2,		law ea3.			/Get reg, referenced for i,lch,dch
+		jmp ea12
+
+ea11,		law ea1
+ea12,		dap ea13
+		lai
+		jda eas1
+		idx sym
+		sad (10.
+		jmp ws3
+		lai
+		dap i t2
+		lac i t2
+		lia
+ea13,		jmp .
+
+ea5,		lai				/lch,dch ptr
+		lio eas1			/instr.
+		ril 5s
+		spi
+		idc
+		jda eas1			/Check loc. referenced by pointer
+		lac t2
+		jmp ea7				/Check loc of pointer
+
+eas1,		0				/Special compare
+eas1+1,		dap eas2
+		law 7777
+		and eas1
+		xor wrd
+		and msk
+		sza
+eas2,		jmp .				/Miss, return
+		jmp ws6				/Hit, print, and quit
+
+
+/ page 25
+
+/Rest of "look"; create new user.
+
+create,		lio (500
+		lac (140000
+		lsm
+		io i wtop
+		dac t
+		sub where
+		dac opt
+		sub (100)
+		sma
+		jmp er5
+		idx i wtop
+		dio i t
+		esm
+		lac opt
+		bring1
+		law 11
+		dac t
+		lio num
+strtu1,		dio i t
+		idx t
+		sas ci
+		jmp strtu1
+		lac (tyihng
+strtup,		bring1
+		dac i (suppc
+		cla
+		dip i c4			/Clear "bits" in case halting
+		lio (suppc
+		jmp bgn2
+
+/Rest of "hold"; halt current user
+
+halt1,		sas (1
+		jmp err
+		jsp notu0
+		lac (halt
+		jmp startup
+
+start
+		
