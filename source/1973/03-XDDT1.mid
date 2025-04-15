@@ -1,899 +1,897 @@
-/ PAGE NUMBERS WILL BE WRITTEN AS COMMENTS
-/ THEY WILL BE ERASED WHEN FINISHED!
-/ PAGE 1 OUT OF 26
+/ Page numbers will be written as comments
+/ They will be erased when finished!
+/ Page 1 out of 26
 
-ASC=720051
-CAC=720053
-CBS=720056
-CKS=720033
-DSC=720050
-EEM=724074
-ESM=720055
-IOH=730000			/IN-OUT HALT
-ISB=720052
-LAT=752260
-LEM=720074
-LSM=720054
-PPA=720005
-PPB=720006
-RPA=720001
-RPB=720030
-SFT=660000
-SZS=640000
-TYI=720004
-TYO=720003
+asc=720051
+cac=720053
+cbs=720056
+cks=720033
+dsc=720050
+eem=724074
+esm=720055
+ioh=730000			/in-out halt
+isb=720052
+lat=752260
+lem=720074
+lsm=720054
+ppa=720005
+ppb=720006
+rpa=720001
+rpb=720030
+sft=660000
+szs=640000
+tyi=720004
+tyo=720003
 
-DBA=722061
-DCL=720063
-DIA=720061
-DRA=722062
-DWC=720062
-ERM=720065
-LRM=720064
-RCC=723022
-RCH=722022
-RXK=720032
-RNM=720066
-RRC=722122
-RRI=720037
-RRO=720017
-RSC=721122
-RSM=720067
-RTB=720035
-SSB=724122
-TCB=724022
-TCC=725022
+dba=722061
+dcl=720063
+dia=720061
+dra=722062
+dwc=720062
+erm=720065
+lrm=720064
+rcc=723022
+rch=722022
+rxk=720032
+rnm=720066
+rrc=722122
+rri=720037
+rro=720017
+rsc=721122
+rsm=720067
+rtb=720035
+ssb=724122
+tcb=724022
+tcc=725022
 
-HALT=760400
-TYTHING=IOT 100
-NETM1U=IOT 643
-NET1MD=IOT 143
-SUPPC=40	/PLACE TO PLANT INSTRUCTION
-PC=35
-DDTCOR=10000
-L=0		R=1
-DDM=(DDTCOR)
-EIC=(DDTCOR+SGP)
-EVC=(DDTCOR+EST)
+halt=760400
+tything=iot 100
+netm1u=iot 643
+net1md=iot 143
+suppc=40	/place to plant instruction
+pc=35
+ddtcor=10000
+l=0		r=1
+ddm=(ddtcor)
+eic=(ddtcor+sgp)
+evc=(ddtcor+est)
 
-/PAGE 2 OUT OF 26
-/LIO (7000... DIDN'T HAVE A CLOSING BRACKET IN THE LISTING
+/page 2 out of 26
+/lio (7000... didn't have a closing bracket in the listing
 
-C20=(20)
-C77=(77)
-CI=(I)
-CJ=(JUMP)
-C4=(4000000)
+c20=(20)
+c77=(77)
+ci=(i)
+cj=(jump)
+c4=(4000000)
 
-DEFINE		DISP LC,UC
-		Z=LC-LSE 44
-		X"T"1000 UC-LSE 44
-TERMINATE	DISP
+define		disp lc,uc
+		z=lc-lse 44
+		x"t"1000 uc-lse 44
+terminate	disp
 
-DEFINE		LETTER A,B
-		DISP A+LSE-44,BE
-TERMINATE	LETTER
+define		letter a,b
+		disp a+lse-44,be
+terminate	letter
 
-DEFINE		SQOZE A,B,C
-		A"T"1600.B"T"40.+C
-TERMINATE	SQOZE
+define		sqoze a,b,c
+		a"t"1600.b"t"40.+c
+terminate	sqoze
 
-DDTCOR/		JMP RLSE
-		JMP USERR
-STAT,		0
-DWANT,		0
-DDTO,		0
-DDTRPA,		0
-DDTCLR,		0
-DDTRRD,		DDCTCOR LSE
-IOPDNE,		0								/CORE 17 LINK INTO CORE 10
-12,		0								/UNUSED
-DDTCONT,	0
-14,		0								/UNUSED
-WTOP,		0
-WHERE,		0
-NETHND,		0
-20,		CLA								/HALT PROCEDURE
-		LSM
-		SAS I DCONT
-		JMP ER5								/IOP BUSY
-		JSP I IOPDNE
-		NETM1D
-26,		HLT								/MAY PUSH CONTINUE
-27,		JMP SYSUP							/ENTRY FROM RESTART PROCEDURE
+ddtcor/		jmp rlse
+		jmp userr
+stat,		0
+dwant,		0
+ddto,		0
+ddtrpa,		0
+ddtclr,		0
+ddtrrd,		ddctcor lse
+iopdne,		0								/core 17 link into core 10
+12,		0								/unused
+ddtcont,	0
+14,		0								/unused
+wtop,		0
+where,		0
+nethnd,		0
+20,		cla								/halt procedure
+		lsm
+		sas i dcont
+		jmp er5								/iop busy
+		jsp i iopdne
+		netm1d
+26,		hlt								/may push continue
+27,		jmp sysup							/entry from restart procedure
 
-30,		LIO (70000							/UNHANG THE DATA CHANNEL
-		RRO 500
-		 HLT
-		JMP T+1
-SYSUP,		LAC I NETHND
-		SZA
-		NETM1U								/NET BACK UP IF A NET USER EXISTS
-		JMP T+1
-/PAGE 3 OF 26
+30,		lio (70000							/unhang the data channel
+		rro 500
+		 hlt
+		jmp t+1
+sysup,		lac i nethnd
+		sza
+		netm1u								/net back up if a net user exists
+		jmp t+1
+/page 3 of 26
 
-LOWLIM=40
-DDTCOR+4200/
+lowlim=40
+ddtcor+4200/
 
-LOW,			0				-0			/INITIAL SYMBOL TABLE
-			0				DDTCORE
-			SQOZE	0,	27,	46		MSK
-			SQOZE	0,	26,	46		EST
-			SQOZE	0,	15,	46		MEM
+low,			0				-0			/initial symbol table
+			0				ddtcore
+			sqoze	0,	27,	46		msk
+			sqoze	0,	26,	46		est
+			sqoze	0,	15,	46		mem
 			0						400000
 			
-/OPERATE GROUP (IN EVENT TIME ORDER)
+/Operate group (in event time order)
 
-			SQOZE	15,	15,	23		CCI
-			SQOZE	26,	13,	32		LAP
-			SQOZE	26, 13, 36		LAT
-			SQOZE	15,	26,	15		CLC
-			SQOZE	15,	25,	13		CLA
-			SQOZE	15,	26,	23		CLI
-			SQOZE	26,	13,	23		OPR 100		/LA=CLA OPR
-			SQOZE	26,	13,	36		OPR 2000	/LAT=CLA OPR
-			SQOZE	15,	27,	13		CMA
-			SQOZE	15,	27,	13		CMI
-			SQOZE	22,	26,	23		HLT
-			SQOZE	35,	41,	32		SWP
-			SQOZE	26,	13,	23		LAI
-			SQOZE	26,	23,	13		LIA
-			SQOZE	35,	36,	20		STF
-NOPCOD,		SQOZE	30,	31,	32		NOP
-			SQOZE	31,	32,	34		OPR
+			sqoze	15,	15,	23		cci
+			sqoze	26,	13,	32		lap
+			sqoze	26, 13, 36		lat
+			sqoze	15,	26,	15		clc
+			sqoze	15,	25,	13		cla
+			sqoze	15,	26,	23		cli
+			sqoze	26,	13,	23		opr 100		/la=cla opr
+			sqoze	26,	13,	36		opr 2000	/lat=cla opr
+			sqoze	15,	27,	13		cma
+			sqoze	15,	27,	13		cmi
+			sqoze	22,	26,	23		hlt
+			sqoze	35,	41,	32		swp
+			sqoze	26,	13,	23		lai
+			sqoze	26,	23,	13		lia
+			sqoze	35,	36,	20		stf
+nopcod,		sqoze	30,	31,	32		nop
+			sqoze	31,	32,	34		opr
 			
-/SPECIAL OPERATE GROUP (IN EVENT TIME ORDER)
+/Special operate group (in event time order)
 
-			SQOZE	26,	20,	23		LFI
-			SQOZE	26,	23,	20		LIF
-			SQOZE	35,	44,	26		SZL
-			SQOZE	35,	15,	23		SCI
-			SQOZE	35,	15,	20		SCF
-			SQOZE	15,	26,	26		CLL
-			SQOZE	23,	20,	23		IFI
-			SQOZE	23,	23,	29		IIF
-			SQOZE	35,	15,	27		SCM
-			SQOZE	15,	27,	26		CML
-			SQOZE	23,	16,	13		IDA
-			SQOZE	23,	16,	15		IDC
-			SQOZE	13,	13,	23		AAI
-			SQOZE	23,	13,	23		IAI
-			SQOZE	42,	13,	23		XAI
-			SQOZE	35,	32,	31		SPO
-/ PAGE 4
+			sqoze	26,	20,	23		lfi
+			sqoze	26,	23,	20		lif
+			sqoze	35,	44,	26		szl
+			sqoze	35,	15,	23		sci
+			sqoze	35,	15,	20		scf
+			sqoze	15,	26,	26		cll
+			sqoze	23,	20,	23		ifi
+			sqoze	23,	23,	29		iif
+			sqoze	35,	15,	27		scm
+			sqoze	15,	27,	26		cml
+			sqoze	23,	16,	13		ida
+			sqoze	23,	16,	15		idc
+			sqoze	13,	13,	23		aai
+			sqoze	23,	13,	23		iai
+			sqoze	42,	13,	23		xai
+			sqoze	35,	32,	31		spo
+/ page 4
 
-/SKIP GROUP
+/Skip group
 
-			SQOZE	15,	26,	31		CLO
-			SQOZE	35,	32,	33		SPQ
-			SQOZE	35,	44,	27		SZM
-			SQOZE	35,	30,	23		SNI
-			SQOZE	35,	44,	31		SPI
-			SQOZE	35,	44,	31		SZO
-			SQOZE	35,	27,	13		SMA
-			SQOZE	35,	32,	13		SPA
-			SQOZE	35,	44,	13		SZA
-			SQOZE	35,	44,	20		SZF
-			SQOZE	35,	44,	35		SZS
-			SQOZE	35,	25,	32		SKP
+			sqoze	15,	26,	31		clo
+			sqoze	35,	32,	33		spq
+			sqoze	35,	44,	27		szm
+			sqoze	35,	30,	23		sni
+			sqoze	35,	44,	31		spi
+			sqoze	35,	44,	31		szo
+			sqoze	35,	27,	13		sma
+			sqoze	35,	32,	13		spa
+			sqoze	35,	44,	13		sza
+			sqoze	35,	44,	20		szf
+			sqoze	35,	44,	35		szs
+			sqoze	35,	25,	32		skp
 
-/STANDARD INSTRUCTIONS
+/standard instructions
 
-			SQOZE	0,	0,	23		I
-			SQOZE	13,	16,	16		ADD
-			SQOZE	13,	30,	16		AND
-			SQOZE	13,	35,	15		ASC
-			SQOZE	15,	13,	15		CAC
-			SQOZE	15,	13,	26		CAL
-			SQOZE	15,	14,	35		CBS
-			SQOZE	15,	25,	35		CKS
-			SQOZE	16,	13,	15		DAC
-			SQOZE	16,	13,	32		DAP
-			SQOZE	16,	14,	13		DBA
-			SQOZE	16,	15,	22		DCH
-			SQOZE	16,	15,	26		DCL
-			SQOZE	16,	23,	13		DIA
-			SQOZE	16,	23,	31		DIO
-			SQOZE	16,	23,	32		DIP
-			SQOZE	16,	23,	40		DIV
-			SQOZE	16,	34,	13		DRA
-			SQOZE	16,	34,	15		DSC
-			SQOZE	16,	41,	15		DWC
-			SQOZE	16,	44,	27		DZM
-			SQOZE	17,	17,	27		EEM
-			SQOZE	17,	34,	27		ESM
-			SQOZE	23,	16,	46		IDX
-			SQOZE	23,	31,	22		IOH
-			SQOZE	23,	31,	34		IOR
-			SQOZE	23,	31,	36		IOT
-			SQOZE	23,	35,	14		ISB
-			SQOZE	23,	35,	32		ISP
-			SQOZE	24,	16,	13		JDA
-			SQOZE	24,	27,	32		JMP
-			SQOZE	24,	35,	32		JSP
-			SQOZE	26,	13,	15		LAC
-			SQOZE	26,	13,	41		LAW
-			SQOZE	26,	15,	22		LCH
-			SQOZE	26,	23,	31		LIO
-			SQOZE	26,	34,	27		LRM
+			sqoze	0,	0,	23		i
+			sqoze	13,	16,	16		add
+			sqoze	13,	30,	16		and
+			sqoze	13,	35,	15		asc
+			sqoze	15,	13,	15		cac
+			sqoze	15,	13,	26		cal
+			sqoze	15,	14,	35		cbs
+			sqoze	15,	25,	35		cks
+			sqoze	16,	13,	15		dac
+			sqoze	16,	13,	32		dap
+			sqoze	16,	14,	13		dba
+			sqoze	16,	15,	22		dch
+			sqoze	16,	15,	26		dcl
+			sqoze	16,	23,	13		dia
+			sqoze	16,	23,	31		dio
+			sqoze	16,	23,	32		dip
+			sqoze	16,	23,	40		div
+			sqoze	16,	34,	13		dra
+			sqoze	16,	34,	15		dsc
+			sqoze	16,	41,	15		dwc
+			sqoze	16,	44,	27		dzm
+			sqoze	17,	17,	27		eem
+			sqoze	17,	34,	27		esm
+			sqoze	23,	16,	46		idx
+			sqoze	23,	31,	22		ioh
+			sqoze	23,	31,	34		ior
+			sqoze	23,	31,	36		iot
+			sqoze	23,	35,	14		isb
+			sqoze	23,	35,	32		isp
+			sqoze	24,	16,	13		jda
+			sqoze	24,	27,	32		jmp
+			sqoze	24,	35,	32		jsp
+			sqoze	26,	13,	15		lac
+			sqoze	26,	13,	41		law
+			sqoze	26,	15,	22		lch
+			sqoze	26,	23,	31		lio
+			sqoze	26,	34,	27		lrm
 			
-/ PAGE 5
+/ page 5
 
-			SQOZE	26,	35,	27		LSM
-			SQOZE	27,	37,	26		MUL
-			SQOZE	32,	32,	13		PPA
-			SQOZE	32,	32,	14		PPB
-			SQOZE	34,	13,	26		RAL
-			SQOZE	34,	13,	34		RAR
-			SQOZE	34,	15,	15		RCC
-			SQOZE	34,	15,	22		RCH
-			SQOZE	34,	15,	22		RCH
-			SQOZE	34,	15,	25		RCK
-			SQOZE	34,	15,	26		RCL
-			SQOZE	34,	23,	26		RIL
-			SQOZE	34,	23,	34		RIR
-			SQOZE	34,	30,	27		RNM
-			SQOZE	34,	32,	13		RPA
-			SQOZE	34,	34,	14		RPB
-			SQOZE	34,	34,	14		RRB
-			SQOZE	34,	34,	15		RRC
-			SQOZE	34,	34,	23		RRI
-			SQOZE	34,	34,	31		RRO
-			SQOZE	34,	35,	15		RSC
-			SQOZE	34,	35,	27		RSM
-			SQOZE	34,	36,	14		RTB
-			SQOZE	35,	13,	16		SAD
-			SQOZE	35,	13,	26		SAL
-			SQOZE	35,	13,	34		SAR
-			SQOZE	35,	13,	35		SAS
-			SQOZE	35,	15,	26		SCL
-			SQOZE	35,	15,	34		SCR
-			SQOZE	35,	20,	36		SFT
-			SQOZE	35,	23,	26		SIL
-			SQOZE	35,	23,	34		SIR
-			SQOZE	35,	35,	14		SSB
-			SQOZE	35,	37,	14		SUB
-			SQOZE	36,	13,	16		TAD
-			SQOZE	36,	15,	14		TCB
-			SQOZE	35,	15,	15		TCC
-			SQOZE	36,	43,	23		TYI
-			SQOZE	36,	43,	31		TYO
-			SQOZE	42,	15,	36		XCT
-			SQOZE	42,	31,	34		XOR
-SGP,		SQOZE	0,	42,	42		XX
-			SQOZE	0,	 2,	35		1S
-			SQOZE	0,	 3,	35		2S
-			SQOZE	0,	 4,	35		3S
-			SQOZE	0,	 5,	35		4S
-			SQOZE	0,	 6,	35		5S
-			SQOZE	0,	 7,	35		6S
-			SQOZE	0,	10,	35		7S
-			SQOZE	0,	11,	35		8S
-			SQOZE	0,	12,	35		9S
+			sqoze	26,	35,	27		lsm
+			sqoze	27,	37,	26		mul
+			sqoze	32,	32,	13		ppa
+			sqoze	32,	32,	14		ppb
+			sqoze	34,	13,	26		ral
+			sqoze	34,	13,	34		rar
+			sqoze	34,	15,	15		rcc
+			sqoze	34,	15,	22		rch
+			sqoze	34,	15,	22		rch
+			sqoze	34,	15,	25		rck
+			sqoze	34,	15,	26		rcl
+			sqoze	34,	23,	26		ril
+			sqoze	34,	23,	34		rir
+			sqoze	34,	30,	27		rnm
+			sqoze	34,	32,	13		rpa
+			sqoze	34,	34,	14		rpb
+			sqoze	34,	34,	14		rrb
+			sqoze	34,	34,	15		rrc
+			sqoze	34,	34,	23		rri
+			sqoze	34,	34,	31		rro
+			sqoze	34,	35,	15		rsc
+			sqoze	34,	35,	27		rsm
+			sqoze	34,	36,	14		rtb
+			sqoze	35,	13,	16		sad
+			sqoze	35,	13,	26		sal
+			sqoze	35,	13,	34		sar
+			sqoze	35,	13,	35		sas
+			sqoze	35,	15,	26		scl
+			sqoze	35,	15,	34		scr
+			sqoze	35,	20,	36		sft
+			sqoze	35,	23,	26		sil
+			sqoze	35,	23,	34		sir
+			sqoze	35,	35,	14		ssb
+			sqoze	35,	37,	14		sub
+			sqoze	36,	13,	16		tad
+			sqoze	36,	15,	14		tcb
+			sqoze	35,	15,	15		tcc
+			sqoze	36,	43,	23		tyi
+			sqoze	36,	43,	31		tyo
+			sqoze	42,	15,	36		xct
+			sqoze	42,	31,	34		xor
+sgp,		sqoze	0,	42,	42		xx
+			sqoze	0,	 2,	35		1s
+			sqoze	0,	 3,	35		2s
+			sqoze	0,	 4,	35		3s
+			sqoze	0,	 5,	35		4s
+			sqoze	0,	 6,	35		5s
+			sqoze	0,	 7,	35		6s
+			sqoze	0,	10,	35		7s
+			sqoze	0,	11,	35		8s
+			sqoze	0,	12,	35		9s
 
-EST,		DDTCORE LOW
+est,		ddtcore low
 
-/ PAGE 6
+/ page 6
 
-RLSE,		JSP I DDTRRD
-LSE,		JSP LCC					/LISTEN LOOP
-LSE+1,		CLC"U"CLF	7
-		DAC SP2
-		DAC OPN
-LSS,		CLC
-		DAC CHI
-		DAC SP1
-LSP,		DZM WRD
-SSN-1,		LAC CUN					/(IOR)
-BSLASH,		DZM DNM
-		SZM SYL
-N2,		DZM SYM L				/LOOP FOR NEXT SYLLABLE
-		DZM SYM R
-		DZM FSM
-		CLC"U"CLF 4
-		DAC LET
-		DAC CC
-LSR,		LIO SK1					/LOOP PER CHAR,  CHEAP PLACE...
-		DIO WA					/...TO DO INITIALIZATION.
-		LAW VF5+1
-		DAP VF5
-		LAW LWT
-		DAP BAX
-		JSP I DDTI				/ TYPE-IN, HANG IF NO CHARS
-		RAL 6S
-		DAC CH
-CDB,		LAW DTB					/USED AS DTB
-		DAC FL1					/NON-ZERO
-CAD,		ADD CH					/USED AS ADD
-		DAP .+1
-LSL,		LIO .
-		ISP CAS
-		JMP UPPER
-LSU,		SZF T 4					/"QUOTE" MODE?
-		JMP NOTQM				/NO
-		IDX CC
-		SAS (4
-		JMP LN4
-QUOTE2,		LAC FSM
-		JMP N1
+rlse,		jsp i ddtrrd
+lse,		jsp lcc					/listen loop
+lse+1,		clc"u"clf	7
+		dac sp2
+		dac opn
+lss,		clc
+		dac chi
+		dac sp1
+lsp,		dzm wrd
+ssn-1,		lac cun					/(ior)
+bslash,		dzm dnm
+		szm syl
+n2,		dzm sym l				/loop for next syllable
+		dzm sym r
+		dzm fsm
+		clc"u"clf 4
+		dac let
+		dac cc
+lsr,		lio sk1					/loop per char,  cheap place...
+		dio wa					/...to do initialization.
+		law vf5+1
+		dap vf5
+		law lwt
+		dap bax
+		jsp i ddti				/ type-in, hang if no chars
+		ral 6s
+		dac ch
+cdb,		law dtb					/used as dtb
+		dac fl1					/non-zero
+cad,		add ch					/used as add
+		dap .+1
+lsl,		lio .
+		isp cas
+		jmp upper
+lsu,		szf t 4					/"quote" mode?
+		jmp notqm				/no
+		idx cc
+		sas (4
+		jmp ln4
+quote2,		lac fsm
+		jmp n1
 
-/ PAGE 7
+/ page 7
 
-/NO-EVAL ROUTINES
+/No-eval routines
 
-ULC,		LAW I 2					/77 SEEN
-		DAC CAS
-		JMP LSR
-EOT,		CLC					/EOT SEEN, RESET EVERYTHING FOR LARRY
-		DAC MSK
-		DAP ULC
-		DZM LL
-		LAC (DCH
-		DAC MEM
-		DAC TAS
-		LAW 8.
-		DAC RADIX
-		DZM USER
-		DZM NUM
-		LAW PI
-		DAP PNS
-		LAW PEV
-		DAP PA1
-		JMP LSE+1
+ulc,		law i 2					/77 seen
+		dac cas
+		jmp lsr
+eot,		clc					/eot seen, reset everything for larry
+		dac msk
+		dap ulc
+		dzm ll
+		lac (dch
+		dac mem
+		dac tas
+		law 8.
+		dac radix
+		dzm user
+		dzm num
+		law pi
+		dap pns
+		law pev
+		dap pa1
+		jmp lse+1
 			
-CHH,		LIO LET					/NUMBER-SIGN LOOKUP
-		LAC CHI
-		SPI"U"SMA
-		JMP SHALL
-		LAW CHTBL
-SEEK,		DAP .+1
-/AND
-YE,		LAC .
-/SHALL		SZA
-/FIND		JMP CHH1
-ERR,		LAW CHARAC R?				/PRINT Q-MARK.  IGNORE LAST CHAR.
-		JDA TYS
-		JMP LSR
+chh,		lio let					/number-sign lookup
+		lac chi
+		spi"u"sma
+		jmp shall
+		law chtbl
+seek,		dap .+1
+/and
+ye,		lac .
+/shall		sza
+/find		jmp chh1
+err,		law charac r?				/print q-mark.  ignore last char.
+		jda tys
+		jmp lsr
 			
-XCL,		LAW XCTBL				/EXCLAMATION MARK
-		JMP SEEK
+xcl,		law xctbl				/exclamation mark
+		jmp seek
 			
-DOT,		LIO CC					/PERIOD
-		LAC LOC
-		SPI I
-		LAC DNM
-		DAC SYL
-		DAC DNM
-		LAW 44
-		DAC T2
-		JMP LN1
+dot,		lio cc					/period
+		lac loc
+		spi i
+		lac dnm
+		dac syl
+		dac dnm
+		law 44
+		dac t2
+		jmp ln1
 			
-QUO,		LAC FSM					/" MEANS TAKE AS INTERNAL
-		SZA
-		JMP N1
-		STF 4
-		JMP LSR
+quo,		lac fsm					/" means take as internal
+		sza
+		jmp n1
+		stf 4
+		jmp lsr
 
-/ PAGE 8
+/ page 8
 
-Q,		LAC LWT
-		JMP N1
+q,		lac lwt
+		jmp n1
 
-DAQ,		LAW 7777				/<DEFINES SYM AS ADDDRESS OF Q
-		AND LWT
-		JMP COM+1
+daq,		law 7777				/<defines sym as adddress of q
+		and lwt
+		jmp com+1
 
-COM,		LAC LOC					/COMMA DEFINES SYM AS LOC
-COM+1,		DAC DF1
-		DZM FL1
-DEF,		LAC LET					/DEFINE SYMBOL
-SK1,		SZA
-		JMP ERR
-		JSP DE
-		JMP PN2
+com,		lac loc					/comma defines sym as loc
+com+1,		dac df1
+		dzm fl1
+def,		lac let					/define symbol
+sk1,		sza
+		jmp err
+		jsp de
+		jmp pn2
 
-DEL,		LAW 3					/#,DELETE
-		JDA TYS
-DEL1,		JMP PN2					/ END OF NO EVAL ROUTINES
+del,		law 3					/#,delete
+		jda tys
+del1,		jmp pn2					/ end of no eval routines
 
-/SET OUTPUT RADIX
+/Set output radix
 
-RADX,		SNI"U"SZM				/SET RADIX
-		SAD (1
-		JMP ERR
-		DAC RADIX
-		JMP LSE
+radx,		sni"u"szm				/set radix
+		sad (1
+		jmp err
+		dac radix
+		jmp lse
 
-/ARITHMETIC FUNCTIONS
+/Arithmetic functions
 
-PLS,		LAC CAD					/PLUS SIGN
-		JMP SSN
+pls,		lac cad					/plus sign
+		jmp ssn
 
-MIN,		SPI					/MINUS SIGN
-		DIO WED
-		LAC CSU					/(SUB)
-		JMP SSN
+min,		spi					/minus sign
+		dio wed
+		lac csu					/(sub)
+		jmp ssn
 
-ISC,		LAC CAN					/(AND) LOGICAL "AND".
-		JMP SSN
+isc,		lac can					/(and) logical "and".
+		jmp ssn
 
-UNI,		JMP SSN-1				/LOGICAL "OR"
+uni,		jmp ssn-1				/logical "or"
 
-/PAGE 9 
+/page 9 
 
-/PRINT "Q" IN FORM SPECIFIED
+/Print "q" in form specified
 
-EQL,		DAC LWT					/PRINT INTEGER IN CURRENT RADIX
-		JSP LCT
-		JDA OPT
-PN2,		JSP LCT
-		JMP LSS
+eql,		dac lwt					/print integer in current radix
+		jsp lct
+		jda opt
+pn2,		jsp lct
+		jmp lss
 
-DEC,		DAC LWT					/PRINT AS DECIMAL INTEGER
-		LAC RADIX
-		DAC T
-		LAW 10.
-		DAC RADIX
-		JSP LCT
-		JDA OPT
-		LAC T
-		DAC RADIX
-		JMP PN2
+dec,		dac lwt					/print as decimal integer
+		lac radix
+		dac t
+		law 10.
+		dac radix
+		jsp lct
+		jda opt
+		lac t
+		dac radix
+		jmp pn2
 
-ABW,		DAC LWT					/PRINT AS INSTRUCTION
-		JSP LCT
-		DAC PI					/JDA PI, BUT DON'T SET FLAG 2
-		LAW PN2
-		STF 3					/FORCE SYMBOLIC PRINTOUT
-		JMP PI+2
+abw,		dac lwt					/print as instruction
+		jsp lct
+		dac pi					/jda pi, but don't set flag 2
+		law pn2
+		stf 3					/force symbolic printout
+		jmp pi+2
 
-PSB,		DAC LWT					/PRINT AS INTERNAL
-		JSP LCT
-		JDA TYSA
-		JMP PN2
+psb,		dac lwt					/print as internal
+		jsp lct
+		jda tysa
+		jmp pn2
 
-SQP,		DAC LWT					/PRINT AS SQOZE CODE
-		JSP LCT
-		DAC SYM R
-		DZM SYM L
-		LAW PN2
-		DAP SPX
-		JMP SPTLIM
+sqp,		dac lwt					/print as sqoze code
+		jsp lct
+		dac sym r
+		dzm sym l
+		law pn2
+		dap spx
+		jmp sptlim
 
-/SET CURRENT CORE
+/set current core
 
-CORE,		SNI I
-		JMP ERR
-		RAR 6S
-		AND (170000
-		DIP MEM
-		DIP TAS					/YES,VIRGINIA, IT'S NECESSARY
-		JMP LSE
+core,		sni i
+		jmp err
+		rar 6s
+		and (170000
+		dip mem
+		dip tas					/yes,virginia, it's necessary
+		jmp lse
 
-/PAGE 10
+/page 10
 
-/REGISTER EXAMINATION AND CHANGE
+/Register examination and change
 
-VBR,		AND (177777				/ :
-		DIP TAS
-		SPI
-		JMP VBR1
-		DIP MEM
-		JMP TA5
+vbr,		and (177777				/ :
+		dip tas
+		spi
+		jmp vbr1
+		dip mem
+		jmp ta5
 
-VBR1,		AND (170000
-		SZA
-		BRING1					/ CALL BRING WITHOUT CHANGING MEM
-		JMP VBR1X
+vbr1,		and (170000
+		sza
+		bring1					/ call bring without changing mem
+		jmp vbr1x
 
-BAC,		LAW OPT					/ OPEN BRACKET 	(BAR=CONSTANT)
-		JMP BAS+1
+bac,		law opt					/ open bracket 	(bar=constant)
+		jmp bas+1
 
-BAI,		LAW TYSA				/CONTROL "I"	(BAR=INTERNAL)
-		JMP BAS+1
+bai,		law tysa				/control "i"	(bar=internal)
+		jmp bas+1
 
-BAS,		LAW PI					/CLOSED BRACKET	(BAR-SYMBOLIC)
-BAS+1,		DAP BAX
-VBR1X,		LAC OPT
-BAR,		SPI
-		JMP TA6
-		LIO SP1
-		DIO SP2
-		SPI
-		JMP TA5
-		AND (1777777)
-TR3,		DAC SP2
-SP5,		JSP LCT
-		LAC I SP2
-		JMP TA7
+bas,		law pi					/closed bracket	(bar-symbolic)
+bas+1,		dap bax
+vbr1x,		lac opt
+bar,		spi
+		jmp ta6
+		lio sp1
+		dio sp2
+		spi
+		jmp ta5
+		and (1777777)
+tr3,		dac sp2
+sp5,		jsp lct
+		lac i sp2
+		jmp ta7
 
-CR,		DAC LWT					/LINE FEED
-		JDA MRF
-		LAW 7715
-		JDA TYS
-		JMP LSE+1
+cr,		dac lwt					/line feed
+		jda mrf
+		law 7715
+		jda tys
+		jmp lse+1
 
-UC8,		JDA MRF		.			/> MEANS MAKE CORR, AND OPEN REGISTER
-		JMP TA6
+uc8,		jda mrf		.			/> means make corr, and open register
+		jmp ta6
 
-/PAGE 11
+/page 11
 					
-BS,		BACKSPACE				/BACKSPACE
-		LIO SP2
-		SPI I
-		JMP BS2
-		IDX LOC
-BS+5,		DAC LWT
-		JMP TA3+2
+bs,		backspace				/backspace
+		lio sp2
+		spi i
+		jmp bs2
+		idx loc
+bs+5,		dac lwt
+		jmp ta3+2
 
-FS,		JDA MRF					/ARROW UP (FORWARD SPACE)
-		JSP LCC
-		LAW I 1
-		LIO SP2
-		SPI I
-		JMP FS1
-		ADD LOC
-		JMP BS+5
+fs,		jda mrf					/arrow up (forward space)
+		jsp lcc
+		law i 1
+		lio sp2
+		spi i
+		jmp fs1
+		add loc
+		jmp bs+5
 
-TAB,		JDA MRF					/MEMORY FIELD SWITCH
-TA3,		DAC LWT
-		JSP LCC
-TA3+2,		JDA PAD
-		LAW CHARAC R/
-		JDA TYS
-TA5,		DZM LOC
-		DAP LOC
-		LIO MEM
-		DIO TAS
-TA6,		LIO C4
-		DIO SP2
-		DAP TAS
-		JSP LCT
-		BRING
-		LAC I TAS
-		LAC I TAS
-TA7,		DAC LWT
-BAX,		JDA .					/PI, OPT OR LWT
-		DZM OPN
-		JMP PN2
+tab,		jda mrf					/memory field switch
+ta3,		dac lwt
+		jsp lcc
+ta3+2,		jda pad
+		law charac r/
+		jda tys
+ta5,		dzm loc
+		dap loc
+		lio mem
+		dio tas
+ta6,		lio c4
+		dio sp2
+		dap tas
+		jsp lct
+		bring
+		lac i tas
+		lac i tas
+ta7,		dac lwt
+bax,		jda .					/pi, opt or lwt
+		dzm opn
+		jmp pn2
 
-/PAGE 12
+/page 12
 
-/SYMBOL ROUTINES
+/Symbol routines
 
-VAL,		DAC DF1					/OPEN PAREN, SETS UP VALUE FOR DEFINITION
-		JMP LSS
+val,		dac df1					/open paren, sets up value for definition
+		jmp lss
 
-TBL,		JSP I DDTCLR				/READ SYMBOL PUNCH
-		JMP RDNY
-		DZM FL1
-		JSP SOI
-MR1,		JSP GWD
-		AND (177777
-		DAC SYM R
-		IOR SYM L
-		SZA
-		JMP TBL1
-TBN,		JSP LCT
-		LAC EST
-		JDA OPT
-TBM,		JSP RBK					/SKIPS REST OF TAPE
-		JMP TBM
+tbl,		jsp i ddtclr				/read symbol punch
+		jmp rdny
+		dzm fl1
+		jsp soi
+mr1,		jsp gwd
+		and (177777
+		dac sym r
+		ior sym l
+		sza
+		jmp tbl1
+tbn,		jsp lct
+		lac est
+		jda opt
+tbm,		jsp rbk					/skips rest of tape
+		jmp tbm
 
-KIL,		SPI					/KIL SYMBOL(S)
-		JMP KI3
-KI2,		LIO LET
-		SPI
-		JMP ERR
-KI1,		LAC I EV2				/USED AS LAC I
-		IO KI1
-		DIP I EV2
-		JMP LSE
+kil,		spi					/kil symbol(s)
+		jmp ki3
+ki2,		lio let
+		spi
+		jmp err
+ki1,		lac i ev2				/used as lac i
+		io ki1
+		dip i ev2
+		jmp lse
 
-/PAGE 13
-
-
-/ZERO CORE
-
-PUL,		SPI					/LOWER LIMIT SETUP
-		JMP ERR
-		DAC FA
-		JMP LSS
-
-ZRO,		JSP OK					/ZERO CORE TO CONTENTS OF M#+3
-		LAW 7777
-		SPI
-		DAC WRD
-		DIP WRD
-		AND FA
-		SPT
-		CLA
-		IOR MEM
-		DAC T
-		LIO NUM
-		BRING
-ZR2,		SUB MEM
-		SZM JMP LSE
-		DIO I T
-		IDX T
-		JMP ZR2
-
-/PAGE 14
-
-/SEARCHES
-
-EAS,		LAW EA1				/EFFECTIVE ADDRESS SEARCH
-		JMP WS
-
-NWS,		LAC SK2				/NOT WORD SEARCH
-		DAC WEA
-WDS,		LAW WS1				/WORD SEARCH
-WS,		SPI
-		JMP ERR
-		DAP WS2
-		JSP LCC
-		LAC USER
-		DAC MWSU
-MWSNU,		DZM MWSFTI
-		SZA I
-		SAS MEM
-		JMP NOTMWS
-		LIO MWSXU			/MOBY WORD SEARCH:  IF USER=MEM=0, SEARCH...
-		IDX USER			/...ALL USERS FOR WRD.
-		SAD (100
-		JMP LOOK1			/RESTORE USER; EXIT TO LSE.
-		ADD STAT
-		DAC EAS1
-		LAW I 7777
-		AND I EAS1
-		SAD (760000
-		JMP WS3+5
-NOTMWS,		BRING
-		LAC LL
-		IOR MEM
-		DAC T
-		DIP T2
-WS4,		DZM SYM
-		DAP T2
-		LAC I T2
-WS2,		JMP .				/EA1 OR WS1
-
-/PAGE 15
-
-/ROUTINES CONCERNED WITH TIME SHARING
-
-LOOK,		SPI				/SET USER BEING EXAMINED
-		JMP CREATE			/GO CREATE NEW USER
-		LIA
-		SUB (100)
-		SMA
-		JMP ERR
-		LAC STAT
-		AAI
-		DAC T
-		LAW I 7777
-		AND I T
-		SAD (760000
-		JMP USERR
-LOOK1,		DIO USER
-		JMP LSE
-
-HOLD,		SPI I
-		JMP HALT1			/HALT USER
-		LAW (IOR (LAC))			/PREVENT USER FROM HALTING
-		JMP HOLD1
-
-FREE,		LAW (AND (-LAC))		/ALLOW USER TO HALT
-HOLD1,		DAP HOLD2			/SET OR CLEAR HELD BY XDDT BIT
-		JSP NOTU0
-		SPI I
-		JMP ERR				/WORKS FOR CURRENT USER ONLY
-		BRING1
-		LAC I C4			/(400000)
-HOLD2,		XCT .
-		DAC I C4
-		JMP LSE
-
-/ PAGE 16
-
-SETPTR,		SPI I				/FREE TT PTRS
-		SPA
-		JMP ERR
-		SAL 2S
-		ADD (141000
-		DAC T
-		SUB (141000+40"T"4)		/40 TT'S
-		SMA
-		JMP ERR
-		LAW 101
-		LSM
-		DAC I T
-		IDX T
-		LIO I T				/HAD BETTER BE CORRECT
-		IDX T
-		LAC I T
-		DZM I T
-		ESM
-		JDA OPT
-		JMP LSE
-
-/PAGE 17
-
-BGN,		BRING1				/START USER
-		SPI
-		JMP BGN3			/NO ARG
-		AND (170000
-		SZA I
-		JMP BGN1			/CORE 0
-		SZS I 60
-		JMP ER4
-BGN1,		JSP NOTU0
-		LIO OPT
-BGN2,		DIO I (PC			/ENTRY FROM "STRTUP"
-BGN3,		LAC STAT
-		ADD USER
-		DAC T
-		LAW 1
-		DAP I T				/HIGH QUEUE
-		JMP LSE
-
-XEC,		SNI I 60			/EXECUTE ARG
-		JMP ER4				/SS6 NOT UP
-		DAC .+1
-T,		0
-		NOP
-		JMP LSE
-
-/READ OR VERIFY PAPER TAPE
-
-SVFY,		LAW VF2				/SPECIAL VERIFY
-		DAP VF5
-VFY,		SPI I				/VERIFY CORE AGAINST BINARY TAPE
-		JMP ERR
-		JSP I DDTCLR
-		JMP RDNY
-		JSP LCC
-		LAC RB2				/(SAD I)
-		JMP RD1
-
-/PAGE 18
-/ USE OF REPEAT MACRO
+/page 13
 
 
-REPEAT (IF VP -.LSE+44-1000, PRINT .MYSTIC 1000 EXCEEDED.
+/Zero core
 
-RD,		SPI I				/READ BINARY TAPE INTO CORE
-		JMP ERR
-		JSP OK
-		JSP I DDTCLR
-		JMP RDNY
-		LAC BS1				/(DAC I)
-RD1,		DIP VF4
-		JSP SOI
-		BRING
-VF1,		LAC MEM
-		DIP T
-		LAC T
-		SUB LL
-		SUB MEM
-		SPA
-		JMP VF2
-		ADD LL
-		SUB UL
-		SZM
-		JMP VF2
-		LAC I LA
-VF4,		T				/DAC I OR SAD I
-		JMMP VF2
-		SAS (XX)
-		SAD NUM				/SPECIAL VERIFY IGNORES PGM MODIFICATION
-		JMP VF5
-		LAW I 7777
-		AND I T
-		ADD T
-		SUB MEM
-		SAD I LA			/IGNORE "." IN ADR IF SPECIAL VFY
-VF5,		JMP .				/JMP .+1 OR JMP VF2
-		JSP PAC
-		JSP LCT
-		JSP LCC
-VF2,		IDX T
-		IDX LA
-		SAD RB1
-		JSP RBK
-		JMP VF1
+pul,		spi					/lower limit setup
+		jmp err
+		dac fa
+		jmp lss
 
-/ PAGE 19
+zro,		jsp ok					/zero core to contents of m#+3
+		law 7777
+		spi
+		dac wrd
+		dip wrd
+		and fa
+		spt
+		cla
+		ior mem
+		dac t
+		lio num
+		bring
+zr2,		sub mem
+		szm jmp lse
+		dio i t
+		idx t
+		jmp zr2
 
-/BRANCHES.  PLACED HERE TO SAVE ROOM IN DISPATCH AREA.
+/page 14
 
-/REST OF LISTEN LOOP.
+/Searches
 
-NOTQM,		CLA
-		RCL 9S
-		DAC T2
-		SUB (44
-		SPA
-		JMP LN
-		ADD TLS				/(JMP LSE)
-		DAP LSX
-		SUB (JMP DEL1			/LAST NO-EVAL ROUTINE
-		SPQ
-		JMP LSX
-		LAW SYL
-		LIO LET
-		SPI I				/SKIP IF LETTER NOT SEEN
-		JSP EVL
-		JMP EV4
-		LAW CHARACT RU			/IGNOR INPUT AND START OVER
-ER2,		JDA TYS
-		JMP LSS
+eas,		law ea1				/effective address search
+		jmp ws
 
-EV4,		DAP SGN
-		LAC WRD
-SGN,		XX				/OPERATOR AND SYLLABLE ADDR.
-		DAC WRD
-		LIO CHI
-		SPI
-		LAC LWT
-		DAC OPT
-LSX,		JMP .				/I.O. MINUS IF NO ARG.  ARG IN AC.
+nws,		lac sk2				/not word search
+		dac wea
+wds,		law ws1				/word search
+ws,		spi
+		jmp err
+		dap ws2
+		jsp lcc
+		lac user
+		dac mwsu
+mwsnu,		dzm mwsfti
+		sza i
+		sas mem
+		jmp notmws
+		lio mwsxu			/moby word search:  if user=mem=0, search...
+		idx user			/...all users for wrd.
+		sad (100
+		jmp look1			/restore user; exit to lse.
+		add stat
+		dac eas1
+		law i 7777
+		and i eas1
+		sad (760000
+		jmp ws3+5
+notmws,		bring
+		lac ll
+		ior mem
+		dac t
+		dip t2
+ws4,		dzm sym
+		dap t2
+		lac i t2
+ws2,		jmp .				/ea1 or ws1
 
-UPPER,		JSP TYPOUT
-		XCT LSL
-		RIL 9S
-		JMP LSU
+/page 15
 
-LN,		ADD (44-12			/LETTER-NUMBER LOGIC
-		SPA
-		JMP N
-		DZM LET
-LN1,		DZM CHI
-		IDX T2
-		IDX CC
-		SAS (4
-		JMP LN3
-		DIO SYM L
-		DZM SYM R
+/Routines concerned with time sharing
 
-/PAGE 20
+look,		spi				/set user being examined
+		jmp create			/go create new user
+		lia
+		sub (100)
+		sma
+		jmp err
+		lac stat
+		aai
+		dac t
+		law i 7777
+		and i t
+		sad (760000
+		jmp userr
+look1,		dio user
+		jmp lse
 
-LN3,		SUB (6
-		SZM
-		JMP LSR
-		LAC SYM R
-		RAL 2S
-		ADD SYM R
-		RAL 3S
-		ADD T2
-		DAC SYM R
-		LAW I 4
-		ADD CC
-		SMA
-		JMP LSR
-LN4,		LAC FSM			/ENTRY FROM QUOTE
-		RAL 6S
-		ADD CH
-		DAC FSM
-		LAW 77
-		SAD CH
-		JMP ULC
-		LAW 3
-		SZF 4
-		SAS CC
-		JMP LSR
-		JMP QUOTE2
+hold,		spi i
+		jmp halt1			/halt user
+		law (ior (lac))			/prevent user from halting
+		jmp hold1
 
-N,		LAC SYL
-		RAL 3S
-CUN,		IOR T2			/USED AS IOR
-		DAC SYL
-		LAC DNM
-		RAL 2S
-		ADD DNM
-		RAL 1S
-		ADD T2
-		DAC DNM
-		JMP LN1
+free,		law (and (-lac))		/allow user to halt
+hold1,		dap hold2			/set or clear held by xddt bit
+		jsp notu0
+		spi i
+		jmp err				/works for current user only
+		bring1
+		lac i c4			/(400000)
+hold2,		xct .
+		dac i c4
+		jmp lse
 
-/PAGE 21
+/ page 16
+
+setptr,		spi i				/free tt ptrs
+		spa
+		jmp err
+		sal 2s
+		add (141000
+		dac t
+		sub (141000+40"t"4)		/40 tt's
+		sma
+		jmp err
+		law 101
+		lsm
+		dac i t
+		idx t
+		lio i t				/had better be correct
+		idx t
+		lac i t
+		dzm i t
+		esm
+		jda opt
+		jmp lse
+
+/page 17
+
+bgn,		bring1				/start user
+		spi
+		jmp bgn3			/no arg
+		and (170000
+		sza i
+		jmp bgn1			/core 0
+		szs i 60
+		jmp er4
+bgn1,		jsp notu0
+		lio opt
+bgn2,		dio i (pc			/entry from "strtup"
+bgn3,		lac stat
+		add user
+		dac t
+		law 1
+		dap i t				/high queue
+		jmp lse
+
+xec,		sni i 60			/execute arg
+		jmp er4				/ss6 not up
+		dac .+1
+t,		0
+		nop
+		jmp lse				/read or verify paper tape
+
+svfy,		law vf2				/special verify
+		dap vf5
+vfy,		spi i				/verify core against binary tape
+		jmp err
+		jsp i ddtclr
+		jmp rdny
+		jsp lcc
+		lac rb2				/(sad i)
+		jmp rd1
+
+/page 18
+/ Use of repeat macro
+
+
+repeat (if vp -.lse+44-1000, print .mystic 1000 exceeded.
+
+rd,		spi i				/read binary tape into core
+		jmp err
+		jsp ok
+		jsp i ddtclr
+		jmp rdny
+		lac bs1				/(dac i)
+rd1,		dip vf4
+		jsp soi
+		bring
+vf1,		lac mem
+		dip t
+		lac t
+		sub ll
+		sub mem
+		spa
+		jmp vf2
+		add ll
+		sub ul
+		szm
+		jmp vf2
+		lac i la
+vf4,		t				/dac i or sad i
+		jmmp vf2
+		sas (xx)
+		sad num				/special verify ignores pgm modification
+		jmp vf5
+		law i 7777
+		and i t
+		add t
+		sub mem
+		sad i la			/ignore "." in adr if special vfy
+vf5,		jmp .				/jmp .+1 or jmp vf2
+		jsp pac
+		jsp lct
+		jsp lcc
+vf2,		idx t
+		idx la
+		sad rb1
+		jsp rbk
+		jmp vf1
+
+/ page 19
+
+/Branches.  Placed here to save room in dispatch area.
+
+/Rest of listen loop.
+
+notqm,		cla
+		rcl 9s
+		dac t2
+		sub (44
+		spa
+		jmp ln
+		add tls				/(jmp lse)
+		dap lsx
+		sub (jmp del1			/last no-eval routine
+		spq
+		jmp lsx
+		law syl
+		lio let
+		spi i				/skip if letter not seen
+		jsp evl
+		jmp ev4
+		law charact ru			/ignor input and start over
+er2,		jda tys
+		jmp lss
+
+ev4,		dap sgn
+		lac wrd
+sgn,		xx				/operator and syllable addr.
+		dac wrd
+		lio chi
+		spi
+		lac lwt
+		dac opt
+lsx,		jmp .				/i.o. minus if no arg.  arg in ac.
+
+upper,		jsp typout
+		xct lsl
+		ril 9s
+		jmp lsu
+
+ln,		add (44-12			/letter-number logic
+		spa
+		jmp n
+		dzm let
+ln1,		dzm chi
+		idx t2
+		idx cc
+		sas (4
+		jmp ln3
+		dio sym l
+		dzm sym r
+
+/page 20
+
+ln3,		sub (6
+		szm
+		jmp lsr
+		lac sym r
+		ral 2s
+		add sym r
+		ral 3s
+		add t2
+		dac sym r
+		law i 4
+		add cc
+		sma
+		jmp lsr
+ln4,		lac fsm			/entry from quote
+		ral 6s
+		add ch
+		dac fsm
+		law 77
+		sad ch
+		jmp ulc
+		law 3
+		szf 4
+		sas cc
+		jmp lsr
+		jmp quote2
+
+n,		lac syl
+		ral 3s
+cun,		ior t2			/used as ior
+		dac syl
+		lac dnm
+		ral 2s
+		add dnm
+		ral 1s
+		add t2
+		dac dnm
+		jmp ln1
+
+/page 21
