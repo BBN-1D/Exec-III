@@ -1,0 +1,65 @@
+/ page 1
+/ XDDT Part 2 6-30-67
+
+/ Subroutines
+
+MRF,		0			/Put AC in currently open reg...
+		dap mrx			/...if there is one
+		lac opn
+		sma
+		spi
+		jmp mrf1
+		lac sp2
+		lio mrf
+		sma
+		jmp special
+		jsp ok
+		bring
+		dio i tas
+mrf1,		lac mrf
+mrx,		jmp .
+
+special		sad (ddtcor+mem
+		jmp er4			/tried to change C#
+		dio i sp2
+		jmp mrf1
+
+/Symbols
+
+de,		dap dex			/define symbol
+		jsp evl
+		jmp df2
+de1,		lac (ddtcor+lowlim+6)
+		sub est
+		sma
+		jmp dex			/NOP to read syms below lowlim
+		idx est
+		lio fl1
+		lac mem
+		sni i
+		lac c4
+		dac tys
+		lio df1
+		sad i est
+		jmp de2
+		law i 2
+		add est
+		dac est
+de2,		dio i est
+		law i 1
+		add est
+		dac est
+		lio sym r
+		dio i est
+		sub one
+		dac est
+		lac sym l
+		sza i
+		jmp de3
+		ior c4
+		dac i est
+		law i 1
+
+/ page 2
+
+
