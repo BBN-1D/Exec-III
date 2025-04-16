@@ -62,4 +62,116 @@ de2,		dio i est
 
 / page 2
 
+de3,		add est
+		dac pad
+		sub one
+		dac est
+		dzm i est
+		lac tys
+bs1,		dac i pad				/Used as dac i
+		jmp dex		
+
+df2,		lac df1
+		sad i es4
+dex,		jmp .
+		dac i es4				/Value is changing
+		lac ev2
+		sub (ddtcor+low
+		spa
+		jmp dex
+		lac i ev2				/Kill initial symbol
+		ior ki1					/(lac i)
+		dip ev2
+		jmp de1					/Define symbol
+
+evl,		dap evx					/Evaluate symbol
+		lac est
+		dac es4
+evg,		dac ev2
+		lac i es4
+		spa
+		jmp esn
+		sza i
+		jmp ev5
+		ral 1s
+		spa
+		jmp esi
+		cla
+es3,		sas sym l
+		jmp esi
+		lac sym r
+rb2,		sad i es4				/Used as sad i
+		jmp ev3
+esi,		idx es4
+ev6,		idx es4
+		sas evc
+		jmp evg
+ev8,		idx evx
+ev3,		idx es4
+evx,		jmp .
+
+esn,		idx es4
+		lac i ev2
+		ral 1s
+		spa
+		jmp esi
+		sar 1s
+		jmp es3
+
+/ page 3
+
+ev5,		idx es4
+		lac i es4
+		sma
+		sad mem
+		jmp ev6
+		idx es4
+ev7,		lac i es4
+		sza i
+		jmp ev5
+		spa
+		idx es4
+		idx es4
+		idx es4
+		sas evc
+		jmp ev7
+		jmp ev8
+
+pi,		xx				/Print instruction
+		stf 2
+pi+2,		dap px+1
+		jsp pev
+		lac pi
+		sub ci
+		spa
+		jmp ppk
+		dac pi
+pr1,		law 0
+		jda tou
+		law charac ri
+		jda tys
+ppk,		cla
+		jda tou
+		jmp pvl
+		lac lwt
+		and (760000
+		sad (sft
+		jmp i66
+		sad pr1				/law 0
+		jmp plo
+		rar 1s
+		sza
+csu,		sub (320000			/Used s sub
+		spa
+		jmp plo
+pvl,		lac pi
+pvl+1,		sza i
+		szf 1 i
+pv3,		jda opt
+px,		clf 7				/Exit
+px+1,		jmp .
+
+plo,		jsp pev
+		jmp pa1+1
+
 
