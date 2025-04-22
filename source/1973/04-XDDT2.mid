@@ -349,3 +349,62 @@ i77,		law i 7777
 
 / page 7
 
+spt,		dap spx			/Symbol print subroutine
+		law 7777
+		and i op2
+		sas i op2
+		jmp sptlim		/Inst.
+		add pi
+		szf i 2
+		jmp spt1
+		sad loc
+		jmp prntpt
+spt1,		lia
+		sub i op2
+		sub (100		/Limit tags to (value)+100
+		sma
+		szf 3
+		jmp sptlin
+		lai
+		jmp pvl+1		/Print as octal
+
+sptlim,		lac (ddtcore sym l
+		dac t3
+spb,		law spd
+		dap spj
+spn,		szm op1
+spr,		idc op1
+spv,		lac i t3
+		and (177777
+spj,		sub .
+		spa
+		jmp spp
+spu,		dac i t3
+		jmp spr
+
+prntpt,		dzm pi
+		dzm op2
+		law charac r.
+		jda tys
+		jmp spx
+
+spp,		lac op1
+		scr 1s
+		sza i
+		jmp sps
+		add spt				/(spx)
+		dap .+1
+		lac .
+		spi i
+		rar 6d
+		jda tou
+sps,		idx spj
+		sas (sub spd+3
+		jmp spn
+		idx t3
+		sas (ddtcore sym+2
+		jmp spb
+spx,		jmp .
+
+/ page 8
+
