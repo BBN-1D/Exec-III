@@ -3,408 +3,504 @@
 
 / Subroutines
 
-MRF,		0			/Put AC in currently open reg...
-		dap mrx			/...if there is one
-		lac opn
-		sma
-		spi
-		jmp mrf1
-		lac sp2
-		lio mrf
-		sma
-		jmp special
-		jsp ok
-		bring
-		dio i tas
-mrf1,		lac mrf
-mrx,		jmp .
+MRF,	0			/Put AC in currently open reg...
+	dap mrx			/...if there is one
+	lac opn
+	sma
+	spi
+	jmp mrf1
+	lac sp2
+	lio mrf
+	sma
+	jmp special
+	jsp ok
+	bring
+	dio i tas
+mrf1,	lac mrf
+mrx,	jmp .
 
-special		sad (ddtcor+mem
-		jmp er4			/tried to change C#
-		dio i sp2
-		jmp mrf1
+special,sad (ddtcor+mem
+	jmp er4			/tried to change C#
+	dio i sp2
+	jmp mrf1
 
 /Symbols
 
-de,		dap dex			/define symbol
-		jsp evl
-		jmp df2
-de1,		lac (ddtcor+lowlim+6)
-		sub est
-		sma
-		jmp dex			/NOP to read syms below lowlim
-		idx est
-		lio fl1
-		lac mem
-		sni i
-		lac c4
-		dac tys
-		lio df1
-		sad i est
-		jmp de2
-		law i 2
-		add est
-		dac est
-de2,		dio i est
-		law i 1
-		add est
-		dac est
-		lio sym r
-		dio i est
-		sub one
-		dac est
-		lac sym l
-		sza i
-		jmp de3
-		ior c4
-		dac i est
-		law i 1
+de,	dap dex			/define symbol
+	jsp evl
+	jmp df2
+de1,	lac (ddtcor+lowlim+6)
+	sub est
+	sma
+	jmp dex			/NOP to read syms below lowlim
+	idx est
+	lio fl1
+	lac mem
+	sni i
+	lac c4
+	dac tys
+	lio df1
+	sad i est
+	jmp de2
+	law i 2
+	add est
+	dac est
+de2,	dio i est
+	law i 1
+	add est
+	dac est
+	lio sym r
+	dio i est
+	sub one
+	dac est
+	lac sym l
+	sza i
+	jmp de3
+	ior c4
+	dac i est
+	law i 1
 
 / page 2
 
-de3,		add est
-		dac pad
-		sub one
-		dac est
-		dzm i est
-		lac tys
-bs1,		dac i pad		/Used as dac i
-		jmp dex		
+de3,	add est
+	dac pad
+	sub one
+	dac est
+	dzm i est
+	lac tys
+bs1,	dac i pad		/Used as dac i
+	jmp dex		
 
-df2,		lac df1
-		sad i es4
-dex,		jmp .
-		dac i es4		/Value is changing
-		lac ev2
-		sub (ddtcor+low
-		spa
-		jmp dex
-		lac i ev2		/Kill initial symbol
-		ior ki1			/(lac i)
-		dip ev2
-		jmp de1			/Define symbol
+df2,	lac df1
+	sad i es4
+dex,	jmp .
+	dac i es4		/Value is changing
+	lac ev2
+	sub (ddtcor+low
+	spa
+	jmp dex
+	lac i ev2		/Kill initial symbol
+	ior ki1			/(lac i)
+	dip ev2
+	jmp de1			/Define symbol
 
-evl,		dap evx			/Evaluate symbol
-		lac est
-		dac es4
-evg,		dac ev2
-		lac i es4
-		spa
-		jmp esn
-		sza i
-		jmp ev5
-		ral 1s
-		spa
-		jmp esi
-		cla
-es3,		sas sym l
-		jmp esi
-		lac sym r
-rb2,		sad i es4		/Used as sad i
-		jmp ev3
-esi,		idx es4
-ev6,		idx es4
-		sas evc
-		jmp evg
-ev8,		idx evx
-ev3,		idx es4
-evx,		jmp .
+evl,	dap evx			/Evaluate symbol
+	lac est
+	dac es4
+evg,	dac ev2
+	lac i es4
+	spa
+	jmp esn
+	sza i
+	jmp ev5
+	ral 1s
+	spa
+	jmp esi
+	cla
+es3,	sas sym l
+	jmp esi
+	lac sym r
+rb2,	sad i es4		/Used as sad i
+	jmp ev3
+esi,	idx es4
+ev6,	idx es4
+	sas evc
+	jmp evg
+ev8,	idx evx
+ev3,	idx es4
+evx,	jmp .
 
-esn,		idx es4
-		lac i ev2
-		ral 1s
-		spa
-		jmp esi
-		sar 1s
-		jmp es3
+esn,	idx es4
+	lac i ev2
+	ral 1s
+	spa
+	jmp esi
+	sar 1s
+	jmp es3
 
 / page 3
 
-ev5,		idx es4
-		lac i es4
-		sma
-		sad mem
-		jmp ev6
-		idx es4
-ev7,		lac i es4
-		sza i
-		jmp ev5
-		spa
-		idx es4
-		idx es4
-		idx es4
-		sas evc
-		jmp ev7
-		jmp ev8
+ev5,	idx es4
+	lac i es4
+	sma
+	sad mem
+	jmp ev6
+	idx es4
+ev7,	lac i es4
+	sza i
+	jmp ev5
+	spa
+	idx es4
+	idx es4
+	idx es4
+	sas evc
+	jmp ev7
+	jmp ev8
 
-pi,		xx			/Print instruction
-		stf 2
-pi+2,		dap px+1
-		jsp pev
-		lac pi
-		sub ci
-		spa
-		jmp ppk
-		dac pi
-pr1,		law 0
-		jda tou
-		law charac ri
-		jda tys
-ppk,		cla
-		jda tou
-		jmp pvl
-		lac lwt
-		and (760000
-		sad (sft
-		jmp i66
-		sad pr1			/law 0
-		jmp plo
-		rar 1s
-		sza
-csu,		sub (320000		/Used as sub
-		spa
-		jmp plo
-pvl,		lac pi
-pvl+1,		sza i
-		szf 1 i
-pv3,		jda opt
-px,		clf 7			/Exit
-px+1,		jmp .
+pi,	xx			/Print instruction
+	stf 2
+pi+2,	dap px+1
+	jsp pev
+	lac pi
+	sub ci
+	spa
+	jmp ppk
+	dac pi
+pr1,	law 0
+	jda tou
+	law charac ri
+	jda tys
+ppk,	cla
+	jda tou
+	jmp pvl
+	lac lwt
+	and (760000
+	sad (sft
+	jmp i66
+	sad pr1			/law 0
+	jmp plo
+	rar 1s
+	sza
+csu,	sub (320000		/Used as sub
+	spa
+	jmp plo
+pvl,	lac pi
+pvl+1,	sza i
+	szf 1 i
+pv3,	jda opt
+px,	clf 7			/Exit
+px+1,	jmp .
 
-plo,		jsp pev
-		jmp pa1+1
+plo,	jsp pev
+	jmp pa1+1
 
 / page 4
 
-i66,		law 1			/?s-9s
-		add pi
-		and pi
-		sza
-		jmp pvl
-		law pa1+1
-		dap pex
-		lac eic
-		jmp eak+2
+i66,	law 1			/?s-9s
+	add pi
+	and pi
+	sza
+	jmp pvl
+	law pa1+1
+	dap pex
+	lac eic
+	jmp eak+2
 
-pad,		0			/print address
-		dap px+1
-		law 7777
-		and pad
-		dac pi
-		clf 1
-pa1,		jsp pev			/pev or pvl
-pa1+1,		law charac r+
-		jda tys
-		jmp pvl
+pad,	0			/print address
+	dap px+1
+	law 7777
+	and pad
+	dac pi
+	clf 1
+pa1,	jsp pev			/pev or pvl
+pa1+1,	law charac r+
+	jda tys
+	jmp pvl
 
-pev,		dap pex			/Symbol lookup subr
-		law i 7777
-		and pi
-		sad (opr		/Detect operates
-		jmp i76
-		and (760000
-		sas (skp
-		sad (spo
-		jmp sev
-eak,		dap ea+1
-		lac est
-eak+2,		dac es4
-		clf 1
-eal,		lac i es4
-		lio i es4
-		sza i
-		jmp ei1
-		ral 1s
-		spa
-		jmp ei3
-		lac es4
-		spi
-		idx es4
-		dac op1
-		spi i
-		cli
-		dio t3
-		idx es4
+pev,	dap pex			/Symbol lookup subr
+	law i 7777
+	and pi
+	sad (opr		/Detect operates
+	jmp i76
+	and (760000
+	sas (skp
+	sad (spo
+	jmp sev
+eak,	dap ea+1
+	lac est
+eak+2,	dac es4
+	clf 1
+eal,	lac i es4
+	lio i es4
+	sza i
+	jmp ei1
+	ral 1s
+	spa
+	jmp ei3
+	lac es4
+	spi
+	idx es4
+	dac op1
+	spi i
+	cli
+	dio t3
+	idx es4
 
 / page 5
 
-ea,		lac i es4
-ea+1,		skp i
-		jmp sko
-		xor pi
-		spa
-		jmp eix
-		lac pi
-		sub i es4
-		spa
-		jmp eix
-		szf i 1
-		jmp psw
-		lac i es4
-		sub i op2
-		szm
-		jmp psw
-eix,		idx es4			/Look at next symbol
-		sad evc			/End of table
-		jmp eix+5
-		sas eic
-		jmp eal
-eix+5,		xct ea+1
-		jmp pex
-		szf i 1
-		jmp pvl			/Type out rest in octal
-		lac pi
-		sub i op2
-		lia
-		sza			/Detect neg nums
-		jmp i77
-eiy-1,		dio pi
-eiy,		jsp spt			/Print symbol
-		lac pi
-sk2,		sza i
-		jmp px
-		xct ea+1
-		jmp .+2
-pex,		jmp .
-		cma
-		dac t22			/Mask
-		jmp eix
+ea,	lac i es4
+ea+1,	skp i
+	jmp sko
+	xor pi
+	spa
+	jmp eix
+	lac pi
+	sub i es4
+	spa
+	jmp eix
+	szf i 1
+	jmp psw
+	lac i es4
+	sub i op2
+	szm
+	jmp psw
+eix,	idx es4		/Look at next symbol
+	sad evc		/End of table
+	jmp eix+5
+	sas eic
+	jmp eal
+eix+5,	xct ea+1
+	jmp pex
+	szf i 1
+	jmp pvl		/Type out rest in octal
+	lac pi
+	sub i op2
+	lia
+	sza			/Detect neg nums
+	jmp i77
+eiy-1,	dio pi
+eiy,	jsp spt		/Print symbol
+	lac pi
+sk2,	sza i
+	jmp px
+	xct ea+1
+	jmp .+2
+pex,	jmp .
+	cma
+	dac t22		/Mask
+	jmp eix
 
-ei1,		idx es4			/Stuff for symbol search
-		lac i es4
-		sma
-		sad mem
-		jmp eix
-		idx es4
-ei2,		lac i es4
-		sza i
-		jmp ei1
-		spa
-		idx es4
-		idx es4
-		idx es4
-		sas eic
-		jmp ei2
-		jmp bix+3
+ei1,	idx es4		/Stuff for symbol search
+	lac i es4
+	sma
+	sad mem
+	jmp eix
+	idx es4
+ei2,	lac i es4
+	sza i
+	jmp ei1
+	spa
+	idx es4
+	idx es4
+	idx es4
+	sas eic
+	jmp ei2
+	jmp bix+3
 
 / page 6
 
-ei3,		spi
-		idx es4
-		idx es4
-		jmp eix
+ei3,	spi
+	idx es4
+	idx es4
+	jmp eix
 
-i76,		dac t1
-		lac pi
-		sas (nop
-		jmp sev+2
-		cla
-		dap ea+1
-		lac (ddrcore+nopcod
-		jmp eak+2
+i76,	dac t1
+	lac pi
+	sas (nop
+	jmp sev+2
+	cla
+	dap ea+1
+	lac (ddrcore+nopcod
+	jmp eak+2
 
-sev,		dac t1			/Save instruction
-		lac pi
-sev+2,		cma
-		dac t22			/Mask
-		law 600			/Spa^usma-skp
-		jmp eak
+sev,	dac t1		/Save instruction
+	lac pi
+sev+2,	cma
+	dac t22		/Mask
+	law 600		/Spa^usma-skp
+	jmp eak
 
-sko,		ior t1
-		sas i es4
-		jmp eix
-		szf 1
-		xor t1
-		sza i
-		jmp eix
-		xor pi
-		lia
-		and t22
-		sza
-		jmp eix
-		dio pi
-		lac (flexo "u"
-		szf 1
-		jda tys
-psw,		lac i op1
-		dac sym r
-		lio t3
-		dio sym l
-		lac es4
-		dac op2
-		stf 1
-		xct ea+1
-		jmp eiy
-		jmp eix
+sko,	ior t1
+	sas i es4
+	jmp eix
+	szf 1
+	xor t1
+	sza i
+	jmp eix
+	xor pi
+	lia
+	and t22
+	sza
+	jmp eix
+	dio pi
+	lac (flexo "u"
+	szf 1
+	jda tys
+psw,	lac i op1
+	dac sym r
+	lio t3
+	dio sym l
+	lac es4
+	dac op2
+	stf 1
+	xct ea+1
+	jmp eiy
+	jmp eix
 
-i77,		law i 7777
-		and pi
-		sas (770000
-		jmp eiy-1
-		law charac r-
-		jda tys
-		lac pi
-		cma
-		jmp pv3
+i77,	law i 7777
+	and pi
+	sas (770000
+	jmp eiy-1
+	law charac r-
+	jda tys
+	lac pi
+	cma
+	jmp pv3
 
 / page 7
 
-spt,		dap spx			/Symbol print subroutine
-		law 7777
-		and i op2
-		sas i op2
-		jmp sptlim		/Inst.
-		add pi
-		szf i 2
-		jmp spt1
-		sad loc
-		jmp prntpt
-spt1,		lia
-		sub i op2
-		sub (100		/Limit tags to (value)+100
-		sma
-		szf 3
-		jmp sptlin
-		lai
-		jmp pvl+1		/Print as octal
+spt,	dap spx		/Symbol print subroutine
+	law 7777
+	and i op2
+	sas i op2
+	jmp sptlim	/Inst.
+	add pi
+	szf i 2
+	jmp spt1
+	sad loc
+	jmp prntpt
+spt1,	lia
+	sub i op2
+	sub (100	/Limit tags to (value)+100
+	sma
+	szf 3
+	jmp sptlin
+	lai
+	jmp pvl+1	/Print as octal
 
-sptlim,		lac (ddtcore sym l
-		dac t3
-spb,		law spd
-		dap spj
-spn,		szm op1
-spr,		idc op1
-spv,		lac i t3
-		and (177777
-spj,		sub .
-		spa
-		jmp spp
-spu,		dac i t3
-		jmp spr
+sptlim,	lac (ddtcore sym l
+	dac t3
+spb,	law spd
+	dap spj
+spn,	szm op1
+spr,	idc op1
+spv,	lac i t3
+	and (177777
+spj,	sub .
+	spa
+	jmp spp
+spu,	dac i t3
+	jmp spr
 
-prntpt,		dzm pi
-		dzm op2
-		law charac r.
-		jda tys
-		jmp spx
+prntpt,	dzm pi
+	dzm op2
+	law charac r.
+	jda tys
+	jmp spx
 
-spp,		lac op1
-		scr 1s
-		sza i
-		jmp sps
-		add spt				/(spx)
-		dap .+1
-		lac .
-		spi i
-		rar 6d
-		jda tou
-sps,		idx spj
-		sas (sub spd+3
-		jmp spn
-		idx t3
-		sas (ddtcore sym+2
-		jmp spb
-spx,		jmp .
+spp,	lac op1
+	scr 1s
+	sza i
+	jmp sps
+	add spt		/(spx)
+	dap .+1
+	lac .
+	spi i
+	rar 6d
+	jda tou
+sps,	idx spj
+	sas (sub spd+3
+	jmp spn
+	idx t3
+	sas (ddtcore sym+2
+	jmp spb
+spx,	jmp .
 
 / page 8
+
+/Unsquoze table.  Must follow spx.
+
+spl,	flexo 01	flexo 23
+	flexo 45	flexo 67
+	flexo 89	flexo ab
+	flexo cd	flexo ef
+	flexo gh	flexo ij
+	flexo kl	flexo mn
+	flexo op	flexo qr
+	flexo st	flexo uv
+	flexo wx	flexo yz
+	1603		/flexo .#
+
+spd,	3100
+	50
+one,	1
+
+/Typeout subroutines
+
+lcc,	dap lc1		/Lower-case-carriage-return
+	law 76		/type crlf
+	jda tys
+lc1,	jmp 
+
+lct,	dap lcx		/Lower-case-tab
+	cla
+	jda tysa
+lcx,	jmp .
+
+lwt,	0		/Last word typed
+	dap pnx
+	lac lwt
+pns,	jda pi		/Pi, opt, or tysa
+pnx,	.
+
+tys,	0		/Type symbol, etc.
+	dzm tswich
+tys+2,	dap tyx
+	law i 3
+	dac tysvar
+tyl,	lac tys
+	ral 6s
+	dac tys
+	and c77
+	dac ch		/Save char
+	sad tswich	/If 0, don't type spaces
+	jmp tyl1
+	sad c77		/If 7, type "char"
+	jmp tysa 1
+	jda tou
+tyl1,	isp tysvar
+	jmp tyl
+	lac lwt
+tyx,	jmp .
+
+/ page 9
+
+tysa,	0		/Type 3 chars
+	dac tswich
+	lio tysa
+	dio tys
+	jmp tys+2
+
+tysa1,	lac tys
+	ral 6s
+	dac tys
+	isp tysvar	/Typout unless 77 is third byte
+	jsp typout
+	sas ch
+	jmp tyl1
+	ral 6s
+	ior c77
+	jmp typou2
+
+typout,	dap typex	/Type control characters
+	lac ch
+	sas (12
+	sad (15
+	jmp typex
+	sad (4
+	jmp typex
+	ior (40
+	sad ch
+	jmp typex
+	ral 6s
+	ior (flexo " ")
+	jda tou
+	rar 6s
+typou2,	jda tou
+	rar 6s
+	jda tou
+typex,	jmp.		/AC has ch if nothing happened
+
+/ page 10
+
 
