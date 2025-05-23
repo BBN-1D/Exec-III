@@ -497,10 +497,71 @@ typout,	dap typex	/Type control characters
 	jda tou
 	rar 6s
 typou2,	jda tou
-	rar 6s
-	jda tou
-typex,	jmp.		/AC has ch if nothing happened
+		rar 6s
+		jda tou
+typex,	jmp .		/AC has ch if nothing happened
 
 / page 10
+/ Pash note:
+/ The up arrow in symbol opa has been converted into a caret.
+/ What does this translate into from FIO-DEC to ASCII?
 
+opt,	0			/Any radix print
+		dap opx
+		dzm op1
+opa-1,	lac opt
+opa,	dac op2
+		cli^usw
+		rcl 1s
+		div radix
+op1,	0
+		sas op1
+		jmp opa
+		swp
+		add (20
+		jda tou
+		lac op2
+		dac op1
+		sas opt
+		jmp opa-1
+		law 10.
+		sas radix
+opx,	jmp .
+		law charac r.
+		jda tys
+		lac opt		/Is this needed?
+		jmp opx
+tou,	0			/Type char from bottom of AC
+		dap toux
+		lio tou
+		jsp i ddto	/Type from bottom of I. O.
+		lac tou
+toux,	jmp .
 
+/Paper tape subroutines
+
+so1,	jda rdb
+sci,	jda rdb		/ Skip over input routine
+		spi i
+		jmp so1
+rbk,	dap rbx		/Read a block into buffer
+		jsp rdb+1
+rb3,	law buf
+		dap rb1
+		dap la
+		lac ddm
+		dzm chi		/cksum
+		dio t2
+		dio t
+		spi
+		jmp rlse
+		jsp rdb+1
+		dio ch
+		law i 1
+		add ch
+		sub t2
+		add (-77
+		sza
+		jmp rbx+1
+
+/page 11
