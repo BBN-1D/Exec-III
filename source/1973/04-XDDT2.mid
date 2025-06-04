@@ -20,13 +20,13 @@ mrf1,	lac mrf
 mrx,	jmp .
 
 special,sad (ddtcor+mem
-	jmp er4			/tried to change C#
+	jmp er4				/tried to change C#
 	dio i sp2
 	jmp mrf1
 
 /Symbols
 
-de,	dap dex			/define symbol
+de,	dap dex				/define symbol
 	jsp evl
 	jmp df2
 de1,	lac (ddtcor+lowlim+6)
@@ -74,15 +74,15 @@ bs1,	dac i pad		/Used as dac i
 df2,	lac df1
 	sad i es4
 dex,	jmp .
-	dac i es4		/Value is changing
+	dac i es4			/Value is changing
 	lac ev2
 	sub (ddtcor+low
 	spa
 	jmp dex
-	lac i ev2		/Kill initial symbol
-	ior ki1			/(lac i)
+	lac i ev2			/Kill initial symbol
+	ior ki1				/(lac i)
 	dip ev2
-	jmp de1			/Define symbol
+	jmp de1				/Define symbol
 
 evl,	dap evx			/Evaluate symbol
 	lac est
@@ -100,7 +100,7 @@ evg,	dac ev2
 es3,	sas sym l
 	jmp esi
 	lac sym r
-rb2,	sad i es4		/Used as sad i
+rb2,	sad i es4			/Used as sad i
 	jmp ev3
 esi,	idx es4
 ev6,	idx es4
@@ -137,7 +137,7 @@ ev7,	lac i es4
 	jmp ev7
 	jmp ev8
 
-pi,	xx			/Print instruction
+pi,	xx				/Print instruction
 	stf 2
 pi+2,	dap px+1
 	jsp pev
@@ -157,7 +157,7 @@ ppk,	cla
 	and (760000
 	sad (sft
 	jmp i66
-	sad pr1			/law 0
+	sad pr1				/law 0
 	jmp plo
 	rar 1s
 	sza
@@ -168,7 +168,7 @@ pvl,	lac pi
 pvl+1,	sza i
 	szf 1 i
 pv3,	jda opt
-px,	clf 7			/Exit
+px,	clf 7				/Exit
 px+1,	jmp .
 
 plo,	jsp pev
@@ -186,7 +186,7 @@ i66,	law 1			/?s-9s
 	lac eic
 	jmp eak+2
 
-pad,	0			/print address
+pad,	0				/print address
 	dap px+1
 	law 7777
 	and pad
@@ -200,7 +200,7 @@ pa1+1,	law charac r+
 pev,	dap pex			/Symbol lookup subr
 	law i 7777
 	and pi
-	sad (opr		/Detect operates
+	sad (opr			/Detect operates
 	jmp i76
 	and (760000
 	sas (skp
@@ -227,7 +227,7 @@ eal,	lac i es4
 	idx es4
 
 / page 5
-
+/
 ea,	lac i es4
 ea+1,	skp i
 	jmp sko
@@ -245,18 +245,18 @@ ea+1,	skp i
 	szm
 	jmp psw
 eix,	idx es4		/Look at next symbol
-	sad evc		/End of table
+	sad evc			/End of table
 	jmp eix+5
 	sas eic
 	jmp eal
 eix+5,	xct ea+1
 	jmp pex
 	szf i 1
-	jmp pvl		/Type out rest in octal
+	jmp pvl			/Type out rest in octal
 	lac pi
 	sub i op2
 	lia
-	sza			/Detect neg nums
+	sza				/Detect neg nums
 	jmp i77
 eiy-1,	dio pi
 eiy,	jsp spt		/Print symbol
@@ -267,7 +267,7 @@ sk2,	sza i
 	jmp .+2
 pex,	jmp .
 	cma
-	dac t22		/Mask
+	dac t22			/Mask
 	jmp eix
 
 ei1,	idx es4		/Stuff for symbol search
@@ -306,8 +306,8 @@ i76,	dac t1
 sev,	dac t1		/Save instruction
 	lac pi
 sev+2,	cma
-	dac t22		/Mask
-	law 600		/Spa^usma-skp
+	dac t22			/Mask
+	law 600			/Spa^usma-skp
 	jmp eak
 
 sko,	ior t1
@@ -353,7 +353,7 @@ spt,	dap spx		/Symbol print subroutine
 	law 7777
 	and i op2
 	sas i op2
-	jmp sptlim	/Inst.
+	jmp sptlim		/Inst.
 	add pi
 	szf i 2
 	jmp spt1
@@ -361,12 +361,12 @@ spt,	dap spx		/Symbol print subroutine
 	jmp prntpt
 spt1,	lia
 	sub i op2
-	sub (100	/Limit tags to (value)+100
+	sub (100		/Limit tags to (value)+100
 	sma
 	szf 3
 	jmp sptlin
 	lai
-	jmp pvl+1	/Print as octal
+	jmp pvl+1		/Print as octal
 
 sptlim,	lac (ddtcore sym l
 	dac t3
@@ -392,7 +392,7 @@ spp,	lac op1
 	scr 1s
 	sza i
 	jmp sps
-	add spt		/(spx)
+	add spt			/(spx)
 	dap .+1
 	lac .
 	spi i
@@ -428,7 +428,7 @@ one,	1
 /Typeout subroutines
 
 lcc,	dap lc1		/Lower-case-carriage-return
-	law 76		/type crlf
+	law 76			/type crlf
 	jda tys
 lc1,	jmp 
 
@@ -437,13 +437,13 @@ lct,	dap lcx		/Lower-case-tab
 	jda tysa
 lcx,	jmp .
 
-lwt,	0		/Last word typed
+lwt,	0			/Last word typed
 	dap pnx
 	lac lwt
 pns,	jda pi		/Pi, opt, or tysa
 pnx,	.
 
-tys,	0		/Type symbol, etc.
+tys,	0			/Type symbol, etc.
 	dzm tswich
 tys+2,	dap tyx
 	law i 3
@@ -452,10 +452,10 @@ tyl,	lac tys
 	ral 6s
 	dac tys
 	and c77
-	dac ch		/Save char
-	sad tswich	/If 0, don't type spaces
+	dac ch			/Save char
+	sad tswich		/If 0, don't type spaces
 	jmp tyl1
-	sad c77		/If 7, type "char"
+	sad c77			/If 7, type "char"
 	jmp tysa 1
 	jda tou
 tyl1,	isp tysvar
@@ -465,7 +465,7 @@ tyx,	jmp .
 
 / page 9
 
-tysa,	0		/Type 3 chars
+tysa,	0			/Type 3 chars
 	dac tswich
 	lio tysa
 	dio tys
@@ -474,7 +474,7 @@ tysa,	0		/Type 3 chars
 tysa1,	lac tys
 	ral 6s
 	dac tys
-	isp tysvar	/Typout unless 77 is third byte
+	isp tysvar		/Typout unless 77 is third byte
 	jsp typout
 	sas ch
 	jmp tyl1
@@ -482,7 +482,7 @@ tysa1,	lac tys
 	ior c77
 	jmp typou2
 
-typout,	dap typex	/Type control characters
+typout,	dap typex		/Type control characters
 	lac ch
 	sas (12
 	sad (15
@@ -499,14 +499,14 @@ typout,	dap typex	/Type control characters
 typou2,	jda tou
 		rar 6s
 		jda tou
-typex,	jmp .		/AC has ch if nothing happened
+typex,	jmp .			/AC has ch if nothing happened
 
 / page 10
 / Pash note:
 / The up arrow in symbol opa has been converted into a caret.
 / What does this translate into from FIO-DEC to ASCII?
 
-opt,	0			/Any radix print
+opt,	0				/Any radix print
 		dap opx
 		dzm op1
 opa-1,	lac opt
@@ -529,28 +529,28 @@ op1,	0
 opx,	jmp .
 		law charac r.
 		jda tys
-		lac opt		/Is this needed?
+		lac opt			/Is this needed?
 		jmp opx
-tou,	0			/Type char from bottom of AC
+tou,	0				/Type char from bottom of AC
 		dap toux
 		lio tou
-		jsp i ddto	/Type from bottom of I. O.
+		jsp i ddto		/Type from bottom of I. O.
 		lac tou
 toux,	jmp .
 
 /Paper tape subroutines
 
 so1,	jda rdb
-sci,	jda rdb		/ Skip over input routine
+sci,	jda rdb			/ Skip over input routine
 		spi i
 		jmp so1
-rbk,	dap rbx		/Read a block into buffer
+rbk,	dap rbx			/Read a block into buffer
 		jsp rdb+1
 rb3,	law buf
 		dap rb1
 		dap la
 		lac ddm
-		dzm chi		/cksum
+		dzm chi			/cksum
 		dio t2
 		dio t
 		spi
@@ -565,3 +565,117 @@ rb3,	law buf
 		jmp rbx+1
 
 /page 11
+
+rb0,	jsp rdb+1
+		dio i rb1
+		lac i rb1
+		add chi
+		dac chi
+		idx rb1
+		idx t2
+		sas ch
+		jmp rb0
+		add chi
+		add t1
+		sad rd4			word just read is in rd4
+rbx,	jmp .
+rbx+1,	lac (flexo sum	/checksum error
+er3,	jda tys
+		jmp rlse
+gwd,	dap gwx			/get word from reader buffer
+gwd+1,	lac la
+		sas rb1
+		jmp gwd1
+		jsp rbk
+		jmp gwd+1
+gwd1,	dap gwd2
+		idx la
+gwd2,	lac .
+gwx,	jmp .
+
+rdb,	0				/rpb subroutine
+rdb1,	dap rdx
+		law i 3
+		dac rd6
+rd3,	jsp i ddtrpa
+		rir 8s
+		spi I
+		jmp rd3
+		ril 2s
+		lac rd4
+		rcl 6s
+		dac rd4
+		isp rd6
+		jmp rd3
+		lio rd4
+		lac rdb
+rdx,	jmp .
+
+/Time sharing subroutines
+
+ok,		dao okx			/ss6 Protect exec and user zero
+		cla
+		sad mem
+		jst notu0
+		sas mem
+		szs 60
+okx,	jmp .
+er5,	esm
+er4,	law charac r?
+		jmp er3
+/page 12
+
+notu0,	dap notu0x
+		cla
+		sas user
+notu0x,	jmp .
+		jmp er4
+
+bring=jda .
+wanted,	0			/get user into core zero
+		dap wantx
+		lac mem
+		sza
+		jmp wantx-1
+want1,	dio saveio
+		lio user
+		sni i		/0"l" for no bring
+		jsp i dwant	/ user wanted in core 0
+		lio saveio
+wantx-1,lac wanted
+wantx,	jmp.
+
+bring1=jda .
+want2,	0			/bring regardless of value in mem
+		dap wantx
+		lac want2
+		dac wanted
+		jmp want1
+
+userr,	law flexo	no
+		jda tys
+		cla
+		jda tou
+		law flexo	us
+		jda tys
+		law flexo	er
+		jmp er3
+
+rdny,	law flexo	bu
+		jda tys
+		law flexo	sym
+		jmp er3
+
+chtbl,	irp [x,,t,m,s,c],[y,,f,m,status,c]
+		charac r'x-26
+		jmp y
+		endirp
+		0
+
+xctbl,	irp[x,,c,a,r,s,i],[l,,cns,oad,rad,smh,lot]
+		charac r'x-26
+		jmp y
+		endirp
+		0
+
+/page 13
