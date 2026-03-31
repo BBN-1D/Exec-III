@@ -1,0 +1,10 @@
+The tapes seem to be in FRAP and DECAL and not MACRO.  
+
+Currently known:
+
+
+341.pt-Algebraic Compiler 6 Source
+
+
+
+
